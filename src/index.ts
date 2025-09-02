@@ -15,7 +15,7 @@ export default {
 		const senderAddress = env.FROM
 		const recipientAddress = env.TO
 		const body = await request.text()
-		const [title, message] = body.split(':').map(v => v.trim())
+		const [title, message] = body.split(/:(.*)/).map(v => v.trim())
 
 		const msg = createMimeMessage()
 		msg.setSender({ name: senderName, addr: senderAddress })
