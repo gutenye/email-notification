@@ -1,5 +1,6 @@
 import { EmailMessage } from 'cloudflare:email'
 import { createMimeMessage } from 'mimetext'
+import { parseMessage } from './parseMessage'
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
@@ -8,22 +9,22 @@ export default {
 		const url = new URL(request.url)
 		const pathname = url.pathname.slice(1)
 		if (!keys.includes(pathname)) {
-			return new Response('Invalid API key', { status: 401 })
+			return new Response('Not found', { status: 404 })
 		}
 
 		const senderName = 'Notification'
 		const senderAddress = env.FROM
 		const recipientAddress = env.TO
 		const body = await request.text()
-		const [title, message] = body.split(/:(.*)/).map(v => v.trim())
+		const message = parseMessage(body)
 
 		const msg = createMimeMessage()
 		msg.setSender({ name: senderName, addr: senderAddress })
 		msg.setRecipient(recipientAddress)
-		msg.setSubject(title)
+		msg.setSubject(message.title)
 		msg.addMessage({
 			contentType: 'text/plain',
-			data: message || '',
+			data: message.body,
 		})
 
 		const emailMessage = new EmailMessage(senderAddress, recipientAddress, msg.asRaw())

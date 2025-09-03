@@ -7,7 +7,7 @@
 - Simple, minial to use, like ntfy
 
 ```sh
-curl DOMAIN/UUID -d 'title: message'
+curl DOMAIN/UUID -d 'title\nbody'
 ```
 
 ## Deploy
