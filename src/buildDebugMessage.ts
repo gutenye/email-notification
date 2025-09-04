@@ -28,20 +28,10 @@ ${bodyText}
 }
 
 function formatHeaders(headers: Headers) {
-	const rows = Array.from(headers.entries()).map(([key, value]) => {
+	return Array.from(headers.entries()).map(([key, value]) => {
 		const newKey = startCase(key).split(' ').join('-')
-		return [newKey, value]
-	})
-	return formatTable(rows)
-}
-
-
-function formatTable(rows: string[][]) {
-	const maxKeyLength = Math.max(...rows.map(row => row[0].length))
-	return rows.map(row => {
-		const key = row[0].padEnd(maxKeyLength, ' ')
-		const value = row[1]
-		return `${key}          ${value}`
+ 		// Email doesn't use mono font, so can't use table whitespace mode
+		return `${newKey}: ${value}`
 	}).join('\n')
 }
 

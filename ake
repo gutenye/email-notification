@@ -17,3 +17,8 @@ app
   .action(async () => { 
     $`bun run dev`
   })
+
+app.command('deploy')
+  .action(async () => {
+    $`bun run deploy`
+  })

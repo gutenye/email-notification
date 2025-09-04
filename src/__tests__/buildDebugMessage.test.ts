@@ -13,8 +13,8 @@ POST https://email.example.com/API_KEY?a=1
 
 ## Headers
 
-Content-Type          text/plain
-X-A                   1
+Content-Type: text/plain
+X-A: 1
 
 ## Body
 
