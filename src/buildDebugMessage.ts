@@ -5,11 +5,12 @@ import { startCase } from 'lodash-es'
 export async function buildDebugMessage(request: Request): Promise<Message> {
 	const method = request.method
 	const url = request.url
+	const urlText = buildUrlText(url)
 	const bodyText = await request.text()
 	const headersText = formatHeaders(request.headers)
 
 	const body = `
-${method} ${url}
+${method} ${urlText}
 
 ## Headers
 
@@ -21,7 +22,7 @@ ${bodyText}
 	`.trim()
 
 	return {
-		title: body.slice(0, 80),
+		title: bodyText.slice(0, 80),
 		body,
 	}
 }
@@ -44,3 +45,9 @@ function formatTable(rows: string[][]) {
 	}).join('\n')
 }
 
+// remove api keys
+function buildUrlText(urlText: string) {
+	const url = new URL(urlText)
+	const newPathname = ['/API_KEY', ...url.pathname.slice(1).split('/').slice(1)].join('/')
+	return `${url.protocol}//${url.host}${newPathname}${url.search}`
+}

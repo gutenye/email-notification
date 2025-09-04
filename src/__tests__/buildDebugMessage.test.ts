@@ -3,13 +3,13 @@ import { describe, it, expect } from 'vitest'
 
 describe('buildDebugMessage', () => {
 	it('should build debug message', async () => {
-		const request = new Request('https://example.com?a=1', { method: 'POST', body: 'test', headers: {
+		const request = new Request('https://email.example.com/apikey?a=1', { method: 'POST', body: 'test', headers: {
 			'x-a': '1',
 			'content-type': 'text/plain',
 		} })
 		const message = await buildDebugMessage(request)
 		const body = `
-POST https://example.com/?a=1
+POST https://email.example.com/API_KEY?a=1
 
 ## Headers
 
