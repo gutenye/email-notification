@@ -1,11 +1,12 @@
 import { EmailMessage } from 'cloudflare:email'
 import { createMimeMessage } from 'mimetext'
 import { parseMessage } from './parseMessage'
+import type { Message } from './types'
+import { buildDebugMessage } from './buildDebugMessage'
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		const keys = env.API_KEYS.split('\n').map(line => line.split(':')[1].trim())
-
 		const url = new URL(request.url)
 		const pathname = url.pathname.slice(1)
 		if (!keys.includes(pathname)) {
@@ -15,8 +16,20 @@ export default {
 		const senderName = 'Notification'
 		const senderAddress = env.FROM
 		const recipientAddress = env.TO
-		const body = await request.text()
-		const message = parseMessage(body)
+
+		let message: Message
+		const isDebug = url.searchParams.get('debug') !== undefined
+		if (isDebug) {
+			message = await buildDebugMessage(request)
+		} else {
+			const body = await request.text()
+			message = parseMessage(body)
+		}
+
+		if (!isDebug) {
+			console.log(message.title)
+		}
+		console.log(message.body)
 
 		const msg = createMimeMessage()
 		msg.setSender({ name: senderName, addr: senderAddress })

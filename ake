@@ -1,0 +1,19 @@
+#!/usr/bin/env script.js
+
+await mixins('package-manager', 'test')
+
+globalThis.PACKAGE_MANAGER = 'bun'
+
+const HELP = `
+`
+
+app
+  .name(PROJECT_NAME)
+  .enableCompletion()
+  .addHelpText('after', HELP.trimEnd())
+
+app
+  .command('start')
+  .action(async () => { 
+    $`bun run dev`
+  })

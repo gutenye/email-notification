@@ -8,6 +8,14 @@
 
 ```sh
 curl DOMAIN/UUID -d 'title\nbody'
+curl DOMAIN/UUID?debug -d ANY   # output all debug info
+```
+
+## Development
+
+```sh
+.env
+	API_KEYS=a:a
 ```
 
 ## Deploy

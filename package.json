@@ -16,6 +16,7 @@
 		"wrangler": "^4.33.1"
 	},
 	"dependencies": {
+		"lodash-es": "^4.17.21",
 		"mimetext": "^3.0.27"
 	}
 }
