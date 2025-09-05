@@ -1,14 +1,18 @@
+import { describe, expect, it } from 'vitest'
 import { buildDebugMessage } from '../buildDebugMessage'
-import { describe, it, expect } from 'vitest'
 
 describe('buildDebugMessage', () => {
-	it('should build debug message', async () => {
-		const request = new Request('https://email.example.com/apikey?a=1', { method: 'POST', body: 'test', headers: {
-			'x-a': '1',
-			'content-type': 'text/plain',
-		} })
-		const message = await buildDebugMessage(request, { title: 'title1'})
-		const body = `
+  it('should build debug message', async () => {
+    const request = new Request('https://email.example.com/apikey?a=1', {
+      method: 'POST',
+      body: 'test',
+      headers: {
+        'x-a': '1',
+        'content-type': 'text/plain',
+      },
+    })
+    const message = await buildDebugMessage(request, { title: 'title1' })
+    const body = `
 POST https://email.example.com/API_KEY?a=1
 
 ## Headers
@@ -20,6 +24,6 @@ X-A: 1
 
 test
 		`.trim()
-		expect(message).toEqual({ title: 'title1', body })
-	})
+    expect(message).toEqual({ title: 'title1', body })
+  })
 })

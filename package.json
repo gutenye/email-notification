@@ -1,23 +1,26 @@
 {
-	"name": "hello",
-	"version": "0.0.0",
-	"private": true,
-	"scripts": {
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev",
-		"test": "vitest",
-		"cf-typegen": "wrangler types"
-	},
-	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.8.19",
-		"@types/lodash-es": "^4.17.12",
-		"typescript": "^5.5.2",
-		"vitest": "~3.2.0",
-		"wrangler": "^4.33.1"
-	},
-	"dependencies": {
-		"lodash-es": "^4.17.21",
-		"mimetext": "^3.0.27"
-	}
+  "name": "hello",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "start": "wrangler dev",
+    "test": "vitest",
+    "lint": "biome check --fix",
+    "lint:ci": "biome ci --reporter=github",
+    "cf-typegen": "wrangler types"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.3",
+    "@cloudflare/vitest-pool-workers": "^0.8.19",
+    "@types/lodash-es": "^4.17.12",
+    "typescript": "^5.5.2",
+    "vitest": "~3.2.0",
+    "wrangler": "^4.33.1"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21",
+    "mimetext": "^3.0.27"
+  }
 }

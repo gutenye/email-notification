@@ -1,15 +1,41 @@
 # Email Notification
 
-> A Rest Api to send email, for email notification
+> Free, unlimited, ntfy like email notification
 
-## Design
+- You must have a domain in Cloudflare
+- You can only send emails to your own email addresses
+
+## Usage
 
 - Simple, minial to use, like ntfy
 
 ```sh
-curl DOMAIN/UUID -d 'title\nbody'
-curl DOMAIN/UUID?debug=TITLE -d ANY   # output all debug info
+curl DOMAIN/API_KEY -d 'title\nbody'
 ```
+
+### Custom Title
+
+```sh
+curl DOMAIN/API_KEY?title=TITLE -d 'body'
+```
+
+
+### Debug mode
+
+```sh
+curl DOMAIN/API_KEY?debug=TITLE -d 'body'   # output url, headers, body
+```
+
+### Use Template
+
+```sh
+curl DOMAIN/API_KEY?template=TEMPLATE -d 'json'
+```
+
+## List of Templates
+
+- [Komodo](./src/templates/komodo)
+
 
 ## Development
 
@@ -20,11 +46,26 @@ curl DOMAIN/UUID?debug=TITLE -d ANY   # output all debug info
 
 ## Deploy
 
+1. Generate secure random API key
+
+```sh
+openssl rand -base64 32 | tr '+/' '-_' | tr -d '=' 
+```
+
 ```sh
 bun run deploy
 
 Cloudflare Dashboard - WORKER - Settings - Variables
-	API_KEYS="name:UUID\n.."
+	API_KEYS="name:API_KEY\n.."
 	FROM="ANY@DASHBOARD_DOMAIN"
 	TO="Dashboard - DOMAIN - Email - Destination address"
 ```
+
+3. Gmail skip spam
+
+```
+Gmail - create filter
+	From: sender email
+	Never send it to Spam
+```
+
