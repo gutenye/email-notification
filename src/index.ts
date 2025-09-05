@@ -22,7 +22,7 @@ export default {
 		let message: Message
 		const isDebug = 'debug' in params
 		if (isDebug) {
-			message = await buildDebugMessage(request, params)
+			message = await buildDebugMessage(request, { title: params.debug })
 		} else {
 			const body = await request.text()
 			message = parseMessage(body)

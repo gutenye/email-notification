@@ -7,7 +7,7 @@ describe('buildDebugMessage', () => {
 			'x-a': '1',
 			'content-type': 'text/plain',
 		} })
-		const message = await buildDebugMessage(request)
+		const message = await buildDebugMessage(request, { title: 'title1'})
 		const body = `
 POST https://email.example.com/API_KEY?a=1
 
@@ -20,6 +20,6 @@ X-A: 1
 
 test
 		`.trim()
-		expect(message.body).toEqual(body)
+		expect(message).toEqual({ title: 'title1', body })
 	})
 })
