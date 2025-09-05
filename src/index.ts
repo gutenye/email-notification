@@ -1,12 +1,12 @@
-import { EmailMessage } from 'cloudflare:email'
-import { createMimeMessage } from 'mimetext'
 import { buildDebugMessage } from './buildDebugMessage'
-import { parseMessage } from './parseMessage'
+import { buildMessage } from './buildMessage'
+import { buildTemplateMessage } from './buildTemplateMessage'
+import { sendEmail } from './sendEmail'
 import type { Message } from './types'
 
 export default {
   async fetch(request, env, ctx): Promise<Response> {
-    const keys = env.API_KEYS.split('\n').map((line) =>
+    const keys = env.API_KEYS.split('\n').map((line: string) =>
       line.split(':')[1].trim(),
     )
     const url = new URL(request.url)
@@ -17,40 +17,20 @@ export default {
       return new Response('Not found', { status: 404 })
     }
 
-    const senderName = 'Notification'
-    const senderAddress = env.FROM
-    const recipientAddress = env.TO
-
     let message: Message
     const isDebug = 'debug' in params
     if (isDebug) {
-      message = await buildDebugMessage(request, { title: params.debug })
+      message = await buildDebugMessage(request, params)
+    } else if (params.template) {
+      message = await buildTemplateMessage(request, params)
     } else {
-      const body = await request.text()
-      message = parseMessage(body)
+      message = await buildMessage(request, params)
     }
 
-    if (!isDebug) {
-      console.log(message.title)
-    }
-    console.log(message.message)
+    print(message)
 
-    const msg = createMimeMessage()
-    msg.setSender({ name: senderName, addr: senderAddress })
-    msg.setRecipient(recipientAddress)
-    msg.setSubject(message.title)
-    msg.addMessage({
-      contentType: 'text/plain',
-      data: message.message,
-    })
-
-    const emailMessage = new EmailMessage(
-      senderAddress,
-      recipientAddress,
-      msg.asRaw(),
-    )
     try {
-      await env.sendEmail.send(emailMessage)
+      await sendEmail({ env, message })
     } catch (error) {
       if (error instanceof Error) {
         return new Response(error.message)

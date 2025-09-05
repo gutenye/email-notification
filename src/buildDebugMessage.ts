@@ -3,7 +3,7 @@ import type { Message } from './types'
 
 export async function buildDebugMessage(
   request: Request,
-  { title }: Options = {},
+  { debug: title }: Options = {},
 ): Promise<Message> {
   const method = request.method
   const url = request.url

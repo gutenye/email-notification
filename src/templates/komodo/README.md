@@ -5,7 +5,7 @@ Send [Komodo](https://github.com/moghtech/komodo) notifications to your email
 
 ## 🌠️ Screenshots
 
-![Screenshot](./docs/screenshot.png)
+![Screenshot](./screenshot.png)
 
 ## 🌟 Features
 

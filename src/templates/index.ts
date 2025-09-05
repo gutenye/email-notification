@@ -1,5 +1,5 @@
 import type { Message } from '../types'
-import { komodo } from './komodo'
+import { komodo } from './komodo/komodo'
 
 export const templates: TemplateFunction = {
   komodo,

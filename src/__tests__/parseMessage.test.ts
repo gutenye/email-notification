@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseMessage } from '../parseMessage'
+import { parseMessage } from '../buildMessage'
 
 describe('parseMessage', () => {
   it('should parse message', () => {

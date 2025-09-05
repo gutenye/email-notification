@@ -1,5 +1,6 @@
-export function parseMessage(payload: string): Message {
-  const parts = payload
+export async function buildMessage(request: Request): Promise<Message> {
+  const body = await request.text()
+  const parts = body
     .replaceAll('\\n', '\n')
     .split(/\n(.*)/s)
     .map((v) => v.trim())

@@ -1,1 +1,1 @@
-export type * from './parseMessage'
+export type * from './buildMessage'

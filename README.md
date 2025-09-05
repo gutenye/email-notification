@@ -32,6 +32,17 @@ curl DOMAIN/API_KEY?debug=TITLE -d 'body'   # output url, headers, body
 curl DOMAIN/API_KEY?template=TEMPLATE -d 'json'
 ```
 
+## List of parameters
+
+| Name | Description|
+|--|--|
+| from | email adderss, Name <email> |
+| to | email address |
+| debug | title, log debug info |
+| 
+
+
+
 ## List of Templates
 
 - [Komodo](./src/templates/komodo)
