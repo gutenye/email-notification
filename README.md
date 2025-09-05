@@ -8,7 +8,7 @@
 
 ```sh
 curl DOMAIN/UUID -d 'title\nbody'
-curl DOMAIN/UUID?debug -d ANY   # output all debug info
+curl DOMAIN/UUID?debug&title=x -d ANY   # output all debug info
 ```
 
 ## Development

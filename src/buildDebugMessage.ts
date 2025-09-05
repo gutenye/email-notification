@@ -2,7 +2,7 @@ import type { Message } from './types'
 import { startCase } from 'lodash-es'
 
 
-export async function buildDebugMessage(request: Request): Promise<Message> {
+export async function buildDebugMessage(request: Request, { title }: Options = {}): Promise<Message> {
 	const method = request.method
 	const url = request.url
 	const urlText = buildUrlText(url)
@@ -22,7 +22,7 @@ ${bodyText}
 	`.trim()
 
 	return {
-		title: bodyText.slice(0, 80),
+		title: title || bodyText.slice(0, 80),
 		body,
 	}
 }
@@ -41,3 +41,5 @@ function buildUrlText(urlText: string) {
 	const newPathname = ['/API_KEY', ...url.pathname.slice(1).split('/').slice(1)].join('/')
 	return `${url.protocol}//${url.host}${newPathname}${url.search}`
 }
+
+type Options = { title?: string }

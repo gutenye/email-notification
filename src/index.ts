@@ -9,6 +9,8 @@ export default {
 		const keys = env.API_KEYS.split('\n').map(line => line.split(':')[1].trim())
 		const url = new URL(request.url)
 		const pathname = url.pathname.slice(1)
+		const params = Object.fromEntries(url.searchParams)
+
 		if (!keys.includes(pathname)) {
 			return new Response('Not found', { status: 404 })
 		}
@@ -18,9 +20,9 @@ export default {
 		const recipientAddress = env.TO
 
 		let message: Message
-		const isDebug = url.searchParams.has('debug')
+		const isDebug = 'debug' in params
 		if (isDebug) {
-			message = await buildDebugMessage(request)
+			message = await buildDebugMessage(request, params)
 		} else {
 			const body = await request.text()
 			message = parseMessage(body)
