@@ -18,7 +18,7 @@ export default {
 		const recipientAddress = env.TO
 
 		let message: Message
-		const isDebug = url.searchParams.get('debug') !== undefined
+		const isDebug = url.searchParams.has('debug')
 		if (isDebug) {
 			message = await buildDebugMessage(request)
 		} else {
