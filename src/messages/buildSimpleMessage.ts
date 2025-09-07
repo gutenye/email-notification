@@ -2,7 +2,7 @@ import type { Message } from '#/types'
 
 export async function buildSimpleMessage(
 	request: Request,
-	options: Options,
+	options: Options = {},
 ): Promise<Message> {
 	const body = await request.text()
 	const parts = body

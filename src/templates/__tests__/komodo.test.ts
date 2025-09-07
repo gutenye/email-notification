@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { komodo } from '../komodo'
+import { komodo } from '../komodo/komodo'
 
 const serverName = 'Server1'
 const komodoHost = 'https://komodo.com'
