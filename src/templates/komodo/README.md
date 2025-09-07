@@ -1,7 +1,6 @@
-# 🧩 Komodo 🧩
+# 🧩 Komodo Email Notification 🧩
 
-
-Send [Komodo](https://github.com/moghtech/komodo) notifications to your email
+> Send [Komodo](https://github.com/moghtech/komodo) notifications to your email
 
 ## 🌠️ Screenshots
 

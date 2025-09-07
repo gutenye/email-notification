@@ -6,6 +6,9 @@
 - You must have a domain in Cloudflare
 - You can only send emails to your own email addresses
 
+why zero configuration
+
+
 ## Usage
 
 - Simple, minial to use, like ntfy
