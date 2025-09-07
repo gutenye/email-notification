@@ -42,8 +42,6 @@ curl DOMAIN/API_KEY?template=TEMPLATE -d 'json'
 | debug | title, log debug info |
 | 
 
-
-
 ## List of Templates
 
 - [Komodo](./src/templates/komodo)
@@ -64,9 +62,9 @@ openssl rand -base64 32 | tr '+/' '-_' | tr -d '='
 bun run deploy
 
 Cloudflare Dashboard - WORKER - Settings - Variables
-	API_KEYS="name:API_KEY\n.."
-	FROM="ANY@DASHBOARD_DOMAIN"
-	TO="Dashboard - DOMAIN - Email - Destination address"
+	API_KEYS: Secret, "API_KEY\n.."
+	FROM: Text, "ANY@DASHBOARD_DOMAIN"
+	TO: Text, "Dashboard - DOMAIN - Email - Destination address"
 ```
 
 3. Enable Cloudflare Email Routing 
@@ -84,6 +82,6 @@ Gmail - create filter
 
 ```sh
 .env
-	API_KEYS=a:a
+	API_KEYS=a
 ```
 

@@ -8,9 +8,7 @@ import { errorResponse, okResponse } from './utils'
 export default {
 	async fetch(request, env): Promise<Response> {
 		try {
-			const keys = env.API_KEYS.split('\n').map((line: string) =>
-				line.split(':')[1].trim(),
-			)
+			const keys = env.API_KEYS.split('\n').map((v) => v.trim())
 			const url = new URL(request.url)
 			const pathname = url.pathname.slice(1)
 			const params = Object.fromEntries(url.searchParams)
