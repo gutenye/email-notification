@@ -21,7 +21,8 @@ export async function sendEmail({ env, message }: Options) {
 		recipientAddress,
 		msg.asRaw(),
 	)
-	return await env.sendEmail.send(emailMessage)
+	await env.sendEmail.send(emailMessage)
+	return message
 }
 
 type Options = {

@@ -3,6 +3,7 @@ import { buildSimpleMessage } from './messages/buildSimpleMessage'
 import { buildTemplateMessage } from './messages/buildTemplateMessage'
 import { sendEmail } from './sendEmail'
 import type { Message } from './types'
+import { errorResponse, okResponse } from './utils'
 
 export default {
 	async fetch(request, env): Promise<Response> {
@@ -14,7 +15,7 @@ export default {
 		const params = Object.fromEntries(url.searchParams)
 
 		if (!keys.includes(pathname)) {
-			return new Response('Not found', { status: 404 })
+			return errorResponse('Not found', { status: 404 })
 		}
 
 		let message: Message
@@ -27,14 +28,14 @@ export default {
 		}
 
 		try {
-			await sendEmail({ env, message })
+			const result = await sendEmail({ env, message })
+			return okResponse(result)
 		} catch (error) {
+			console.error(error)
 			if (error instanceof Error) {
-				return new Response(error.message)
+				return errorResponse(error)
 			}
-			return new Response('An unknown error occurred')
+			return errorResponse('An unknown error occurred')
 		}
-
-		return new Response('OK')
 	},
 } satisfies ExportedHandler<Env>

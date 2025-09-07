@@ -13,6 +13,19 @@ app.command('start').action(async () => {
 	$`bun start`
 })
 
+app.command('types').action(async () => {
+	$`bun run types`
+})
+
 app.command('deploy').action(async () => {
 	$`bun run deploy`
+})
+
+const localtest = app.command('localtest')
+
+localtest.command('komodo').action(async () => {
+	$`
+		echo '{ "ts": 1756926007932, "resolved": true, "level": "OK", "target": { "type": "Procedure", "id": "68b7b4ff743c4a609742e01b" }, "data": { "type": "ScheduleRun", "data": { "resource_type": "Procedure", "id": "68b7b4ff743c4a609742e01b", "name": "Global Auto Update" } }, "resolved_ts": 1756926007932 }' | \
+		http 'http://localhost:8787/a?template=komodo&serverName=Server1&komodoHost=https://komodo.com'
+	`
 })
