@@ -1,6 +1,7 @@
-# Email Notification
+# Guten Email Notification
 
-> Free, unlimited, ntfy like email notification
+> Zero configuration, ntfy like email notification. 
+> Supports various services like Jellyfin, Komodo, BilibiliToolPro, etc
 
 - You must have a domain in Cloudflare
 - You can only send emails to your own email addresses
@@ -48,12 +49,6 @@ curl DOMAIN/API_KEY?template=TEMPLATE -d 'json'
 - [Komodo](./src/templates/komodo)
 
 
-## Development
-
-```sh
-.env
-	API_KEYS=a:a
-```
 
 ## Deploy
 
@@ -62,6 +57,8 @@ curl DOMAIN/API_KEY?template=TEMPLATE -d 'json'
 ```sh
 openssl rand -base64 32 | tr '+/' '-_' | tr -d '=' 
 ```
+
+2. [Click to deploy Cloudflare]
 
 ```sh
 bun run deploy
@@ -72,11 +69,21 @@ Cloudflare Dashboard - WORKER - Settings - Variables
 	TO="Dashboard - DOMAIN - Email - Destination address"
 ```
 
+3. Enable Cloudflare Email Routing 
+
 3. Gmail skip spam
 
 ```
 Gmail - create filter
 	From: sender email
 	Never send it to Spam
+```
+
+
+## Development
+
+```sh
+.env
+	API_KEYS=a:a
 ```
 

@@ -7,18 +7,12 @@ globalThis.PACKAGE_MANAGER = 'bun'
 const HELP = `
 `
 
-app
-  .name(PROJECT_NAME)
-  .enableCompletion()
-  .addHelpText('after', HELP.trimEnd())
+app.name(PROJECT_NAME).enableCompletion().addHelpText('after', HELP.trimEnd())
 
-app
-  .command('start')
-  .action(async () => { 
-    $`bun run dev`
-  })
+app.command('start').action(async () => {
+	$`bun start`
+})
 
-app.command('deploy')
-  .action(async () => {
-    $`bun run deploy`
-  })
+app.command('deploy').action(async () => {
+	$`bun run deploy`
+})
