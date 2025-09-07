@@ -8,8 +8,14 @@ export async function buildDebugMessage(
 	const method = request.method
 	const url = request.url
 	const urlText = buildUrlText(url)
-	const messageText = await request.text()
 	const headersText = formatHeaders(request.headers)
+
+	let messageText = await request.text()
+	try {
+		messageText = JSON.stringify(JSON.parse(messageText), null, 2)
+	} catch {
+		// ignore
+	}
 
 	const message = `
 ${method} ${urlText}
