@@ -4,18 +4,23 @@ import { formatPercentage } from '../../utils/format'
 export function komodo(payload: Payload, params: Params): Message {
 	const { type } = payload.data
 	const { serverName } = params
+
+	// title
 	let action = type
-	const handler = handlers[type]
+	const handler = handlers[type as keyof typeof handlers]
 	if (handler) {
 		const result = handler(payload.data.data)
 		action = result.action || action
 	}
-	const title = `${serverName}: ${action}`
+	const title = `[Komodo/${serverName}] ${action}`
+
+	// message
 	const komodoUrl = buildKomodoUrl(payload, params)
 	const message = `
 ${komodoUrl}
 ${JSON.stringify(payload, null, 2)}
 		`.trim()
+
 	return {
 		title,
 		message,
