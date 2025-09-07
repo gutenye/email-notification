@@ -1,6 +1,6 @@
 import invariant from 'tiny-invariant'
 import type { Message } from '../types'
-import { komodo } from './komodo/komodo'
+import { komodo } from './Komodo/komodo'
 
 export function getTemplate(templateName: string): Template {
 	const template = templates[templateName]

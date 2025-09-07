@@ -8,6 +8,8 @@
 
 why zero configuration
 
+in jellyfin, ..
+
 
 ## Usage
 
