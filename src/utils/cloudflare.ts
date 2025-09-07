@@ -9,15 +9,15 @@ import { serializeError } from './error'
 // okResponse(data | undefined)
 
 export function okResponse(
-	data: Record<string, unknown> = {},
-	headers: Record<string, string> = {},
+	data: Record<string, unknown>,
+	options: Record<string, unknown> = {},
 ) {
-	return jsonResponse(data, headers)
+	return jsonResponse(data, options)
 }
 
 export function errorResponse(
 	inputError: string | Error,
-	headers: Record<string, string> = {},
+	inputOptions: Record<string, unknown> = {},
 ) {
 	let result: Record<string, unknown>
 	if (inputError instanceof Error) {
@@ -26,17 +26,22 @@ export function errorResponse(
 	} else {
 		result = { error: inputError }
 	}
-	return jsonResponse(result, headers)
+	const options = {
+		status: 500,
+		...inputOptions,
+	}
+	return jsonResponse(result, options)
 }
 
 export function jsonResponse(
 	body: Record<string, unknown>,
-	headers: Record<string, string> = {},
+	options: Record<string, unknown> = {},
 ) {
 	return new Response(JSON.stringify(body), {
+		...options,
 		headers: {
 			'Content-Type': 'application/json',
-			...headers,
+			...(options.headers as Record<string, string>),
 		},
 	})
 }

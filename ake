@@ -23,6 +23,10 @@ app.command('deploy').action(async () => {
 
 const localtest = app.command('localtest')
 
+localtest.command('error').action(async () => {
+	$`http ':8787/a?template=komodo' a=1`
+})
+
 localtest.command('komodo').action(async () => {
 	$`
 		echo '{ "ts": 1756926007932, "resolved": true, "level": "OK", "target": { "type": "Procedure", "id": "68b7b4ff743c4a609742e01b" }, "data": { "type": "ScheduleRun", "data": { "resource_type": "Procedure", "id": "68b7b4ff743c4a609742e01b", "name": "Global Auto Update" } }, "resolved_ts": 1756926007932 }' | \
