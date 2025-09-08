@@ -13,5 +13,9 @@
 ## Getting Started
 
 ```sh
-Url: https://HOST/API_KEY?template=Jellyfin
+Jellyfin - Dashboard - My Plugins - Webhook
+Server Url: https://my-server.com
+Add Generic Destination
+Webhook Url: https://EMAIL_NOTIFICATION/API_KEY?template=Jellyfin
+Send All Properties: yes
 ```

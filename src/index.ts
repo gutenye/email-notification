@@ -14,7 +14,7 @@ export default {
 			const params = Object.fromEntries(url.searchParams)
 
 			if (!keys.includes(pathname)) {
-				return errorResponse('Not found', { status: 404 })
+				return errorResponse('Invalid api key', { status: 404 })
 			}
 
 			let message: Message
