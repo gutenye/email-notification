@@ -6,22 +6,22 @@ describe('buildSimpleMessage', () => {
 		const message = await buildSimpleMessage(
 			new Request('https://example.com', {
 				method: 'POST',
-				body: 'title\nbody',
+				body: 'MyTitle\nLine1\nLine2',
 			}),
 		)
 		const expected = {
-			title: 'title',
-			message: 'body',
+			title: 'MyTitle',
+			message: 'Line1\nLine2',
 		}
 		expect(message).toEqual(expected)
 	})
 
-	it('should parse message with no body', async () => {
+	it('should parse message with title only', async () => {
 		const message = await buildSimpleMessage(
-			new Request('https://example.com', { method: 'POST', body: 'title' }),
+			new Request('https://example.com', { method: 'POST', body: 'MyTitle' }),
 		)
 		const expected = {
-			title: 'title',
+			title: 'MyTitle',
 			message: '',
 		}
 		expect(message).toEqual(expected)
@@ -31,12 +31,27 @@ describe('buildSimpleMessage', () => {
 		const message = await buildSimpleMessage(
 			new Request('https://example.com', {
 				method: 'POST',
-				body: 'title\\nline1\\nline2',
+				body: 'MyTitle\\nLine1\\nLine2',
 			}),
 		)
 		const expected = {
-			title: 'title',
-			message: 'line1\nline2',
+			title: 'MyTitle',
+			message: 'Line1\nLine2',
+		}
+		expect(message).toEqual(expected)
+	})
+
+	it('support title parameter', async () => {
+		const message = await buildSimpleMessage(
+			new Request('https://example.com', {
+				method: 'POST',
+				body: 'Line1\nLine2',
+			}),
+			{ title: 'MyTitle' },
+		)
+		const expected = {
+			title: 'MyTitle',
+			message: 'Line1\nLine2',
 		}
 		expect(message).toEqual(expected)
 	})

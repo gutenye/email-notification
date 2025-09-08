@@ -11,7 +11,7 @@ export default {
 			const keys = env.API_KEYS.split('\n').map((v) => v.trim())
 			const url = new URL(request.url)
 			const pathname = url.pathname.slice(1)
-			const params = Object.fromEntries(url.searchParams)
+			const params = Object.fromEntries(url.searchParams) as Params
 
 			if (!keys.includes(pathname)) {
 				return errorResponse('Invalid api key', { status: 404 })
@@ -26,7 +26,9 @@ export default {
 				message = await buildSimpleMessage(request, params)
 			}
 
-			const result = await sendEmail({ env, message })
+			const from = params.from || env.DEFAULT_FROM
+			const to = params.to || env.DEFAULT_TO
+			const result = await sendEmail({ from, to, message, env })
 			return okResponse(result)
 		} catch (error) {
 			console.error(error)
@@ -37,3 +39,12 @@ export default {
 		}
 	},
 } satisfies ExportedHandler<Env>
+
+type Params = {
+	from?: string
+	to?: string
+	template?: string
+	title?: string
+	debug?: string
+	[key: string]: string | undefined
+}

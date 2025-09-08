@@ -1,95 +1,49 @@
-# Guten Email Notification
+# 💌 Guten Email Notification 💌
 
-> Zero configuration, ntfy like email notification. 
-> Supports various services like Jellyfin, Komodo, BilibiliToolPro, etc
+**Zero configuration, nfty like email notification.** Supports various apps like Jellyfin, Komodo etc 
 
-- You must have a domain in Cloudflare
-- You can only send emails to your own email addresses
+**Show your ❤️ and support by starring this project and following the author, [Guten Ye](https://github.com/gutenye)!**
 
-why zero configuration
+[![Stars](https://img.shields.io/github/stars/gutenye/email-notification?style=social)](https://github.com/gutenye/email-notification) [![License](https://img.shields.io/github/license/gutenye/email-notification?color=blue)](https://github.com/gutenye/email-notification/blob/main/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue)](https://github.com/gutenye/email-notification#-contribute)
 
-in jellyfin, ..
+## 🌠️ Screenshots
 
-## Documentation
+![Screenshot](./docs/screenshot.png)
 
+## 🌟 Features
+
+- **Email Notiifcations**: keep your notification and history in your email inbox
+- **Simple to use**: `curl HOST/API_KEY -d $'title\nmessage'`
+- **Zero configuration**: Just put the `HOST/API_KEY?template=APP` in the app, and it works out of box.
+- **Write Template**: write template in javascript, no more handlerbars, go templates.
+- **Support a lot of Apps**: If one is missing, you can add one by creating a PR
+- **Human friendly messages**: easy to read message
+
+## 📖 Documentation
+
+- [Send Messages](./docs/SendMessages.md)
+- [Deployment](./docs/Deployment.md)
 - [List of Supported Apps](./docs/SupportedApps.md)
+- [Development](./docs/Development)
 
-## Usage
+## 🙇 Thanks
 
-- Simple, minial to use, like ntfy
+- [Cloudflare](https://www.cloudflare.com): Connect, protect, and build everywhere
+- [Komodo](https://github.com/moghtech/komodo): a tool to build and deploy software on many servers 
 
-```sh
-curl DOMAIN/API_KEY -d 'title\nbody'
-```
+We love contributions! Whether you’re fixing bugs, adding features, or improving documentation, your involvement makes this project better.
 
-### Custom Title
+**How to Contribute:**
 
-```sh
-curl DOMAIN/API_KEY?title=TITLE -d 'body'
-```
+1. Fork the Repository
+2. Open a Pull Request on Github
 
+---
 
-### Debug mode
+Thank you for using Guten Email Notification! If you found it helpful, please ⭐️ star the project ️️⭐ on GitHub. If you have any questions, encounter issues, please refer to the documentation or report an issue on GitHub.
 
-```sh
-curl DOMAIN/API_KEY?debug=TITLE -d 'body'   # output url, headers, body
-```
+**Special Thanks to All Contributors:**
 
-### Use Template
+[![](https://contrib.rocks/image?repo=gutenye/email-notification)](https://github.com/gutenye/email-notification/graphs/contributors)
 
-```sh
-curl DOMAIN/API_KEY?template=TEMPLATE -d 'json'
-```
-
-## List of parameters
-
-| Name | Description|
-|--|--|
-| from | email adderss, Name <email> |
-| to | email address |
-| debug | title, log debug info |
-| 
-
-## List of Templates
-
-- [Komodo](./src/templates/komodo)
-
-
-
-## Deploy
-
-1. Generate secure random API key
-
-```sh
-openssl rand -base64 32 | tr '+/' '-_' | tr -d '=' 
-```
-
-2. [Click to deploy Cloudflare]
-
-```sh
-bun run deploy
-
-Cloudflare Dashboard - WORKER - Settings - Variables
-	API_KEYS: Secret, "API_KEY\n.."
-	FROM: Text, "ANY@DASHBOARD_DOMAIN"
-	TO: Text, "Dashboard - DOMAIN - Email - Destination address"
-```
-
-3. Enable Cloudflare Email Routing 
-
-3. Gmail skip spam
-
-```
-Gmail - create filter
-	From: sender email
-	Never send it to Spam
-```
-
-
-## Development
-
-```sh
-.env
-	API_KEYS=a
-```
-
+[⬆ Back to top ⬆](#readme)

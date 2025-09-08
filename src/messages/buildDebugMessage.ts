@@ -3,20 +3,23 @@ import type { Message } from '#/types'
 
 export async function buildDebugMessage(
 	request: Request,
-	{ debug: title }: Options = {},
+	params: Params = {},
 ): Promise<Message> {
 	const method = request.method
 	const url = request.url
 	const urlText = buildUrlText(url)
 	const headersText = formatHeaders(request.headers)
+	const { debug: inpuTitle } = params
 
 	let messageText = await request.text()
 	try {
+		// Try to pretty print json
 		messageText = JSON.stringify(JSON.parse(messageText), null, 2)
 	} catch {
 		// ignore
 	}
 
+	const title = inpuTitle || messageText.slice(0, 80)
 	const message = `
 ${method} ${urlText}
 
@@ -30,7 +33,7 @@ ${messageText}
 	`.trim()
 
 	return {
-		title: title || messageText.slice(0, 80),
+		title,
 		message,
 	}
 }
@@ -39,7 +42,7 @@ function formatHeaders(headers: Headers) {
 	return Array.from(headers.entries())
 		.map(([key, value]) => {
 			const newKey = startCase(key).split(' ').join('-')
-			// Email doesn't use mono font, so can't use table whitespace mode
+			// Email doesn't use mono font, so can't use format it into table
 			return `${newKey}: ${value}`
 		})
 		.join('\n')
@@ -55,4 +58,4 @@ function buildUrlText(urlText: string) {
 	return `${url.protocol}//${url.host}${newPathname}${url.search}`
 }
 
-type Options = { debug?: string }
+type Params = { debug?: string }
