@@ -1,6 +1,6 @@
 # 💌 Guten Email Notification 💌
 
-**Zero configuration, nfty like email notification.** Supports various apps like Jellyfin, Komodo etc 
+**Zero configuration, nfty like email notification service.** Supports various apps like Jellyfin, Komodo etc 
 
 **Show your ❤️ and support by starring this project and following the author, [Guten Ye](https://github.com/gutenye)!**
 
@@ -13,10 +13,10 @@
 ## 🌟 Features
 
 - **Email Notiifcations**: keep your notification and history in your email inbox
-- **Simple to use**: `curl HOST/API_KEY -d $'title\nmessage'`
-- **Zero configuration**: Just put the `HOST/API_KEY?template=APP` in the app, and it works out of box.
+- **Simple to use**: Rest api, just a title and a body.
+- **Zero configuration**: Just put the url in the app, and it works out of box.
 - **Write Template**: write template in javascript, no more handlerbars, go templates.
-- **Support a lot of Apps**: If one is missing, you can add one by creating a PR
+- **Support a lot of Apps**: Get notifed every thing from your NAS.
 - **Human friendly messages**: easy to read message
 
 ## 📖 Documentation
@@ -24,7 +24,7 @@
 - [Send Messages](./docs/SendMessages.md)
 - [Deployment](./docs/Deployment.md)
 - [List of Supported Apps](./docs/SupportedApps.md)
-- [Development](./docs/Development)
+- [Development](./docs/Development.md)
 
 ## 🙇 Thanks
 
