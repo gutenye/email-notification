@@ -33,13 +33,8 @@
 
 - [Send Messages](./docs/SendMessages.md): API usage, examples, and advanced features
 - [Quick Deploy](./docs/Deployment.md): One-click deployment to Cloudflare Workers
-- [Supported Apps](./src/templates/README.md): Pre-built templates for popular apps
+- [Supported Apps](./src/templates/SupportedApps.md): Pre-built templates for popular apps
 - [Development](./docs/Development.md): Local setup and development guide
-
-## 🙏 Acknowledgments
-
-- [Cloudflare](https://www.cloudflare.com): Connect, protect, and build everywhere
-- [Komodo](https://github.com/moghtech/komodo): a tool to build and deploy software on many servers
 
 ## 🤝 Contributing
 
