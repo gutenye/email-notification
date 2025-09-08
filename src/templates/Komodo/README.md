@@ -15,25 +15,27 @@
 
 ## Getting Started
 
-1. **[Quick Deploy](../../docs/Deployment.md)** - Deploy Guten Email Notification
+1. **[Quick Deploy](../../../docs/Deployment.md)** - Deploy Guten Email Notification
 
 2. **Configure Komodo Integration**
 
-Go to **Komodo Settings → Alerts** and add your notification URL:
+	Go to **Komodo Settings → Alerts** and add your notification URL:
 
-```sh
-https://YOUR_DOMAIN.workers.dev/YOUR_API_KEY?template=Komodo&serverName=MyServer&komodoHost=https://my-server.com
-```
+	```sh
+	https://YOUR_DOMAIN.workers.dev/YOUR_API_KEY?template=Komodo&serverName=MyServer&komodoHost=https://my-server.com
+	```
 
-**Configuration Parameters:**
-- `template=Komodo` - Uses the Komodo-specific email template
-- `serverName=MyServer` - Your server name (appears in email subject)
-- `komodoHost=https://my-server.com` - Your Komodo instance URL
+	**Configuration Parameters:**
 
-## Advanced Configiration
+	- template: Uses the Komodo email template
+	- serverName: Your server name (appears in email subject)
+	- komodoHost: Your Komodo instance URL
 
-###   Skip unwanted notification types
+## Advanced Configuration
+
+### Skip unwanted notification types
 
 ```sh
 &skip=StackStateChange,ServiceHealthCheck
 ```
+- skip: notification type

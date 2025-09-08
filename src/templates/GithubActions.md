@@ -1,4 +1,4 @@
-# GitHub Actions
+# 🧩 Guten Email Notification for Github Actions 🧩
 
 ```yaml
 - name: Notify on failure
