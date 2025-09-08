@@ -36,9 +36,9 @@ function buildItemName(payload: Payload): string {
 	const { ItemType, SeriesName, SeasonNumber00, EpisodeNumber00, Name } =
 		payload
 	if (ItemType === 'Season') {
-		return SeriesName
+		return `${SeriesName} S${SeasonNumber00 || ''}`
 	} else if (ItemType === 'Episode') {
-		return `${SeriesName} S${SeasonNumber00}E${EpisodeNumber00}`
+		return `${SeriesName} S${SeasonNumber00}E${EpisodeNumber00 || ''}`
 	} else if (ItemType === 'Movie') {
 		return Name
 	}

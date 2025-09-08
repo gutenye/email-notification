@@ -4,11 +4,13 @@ import { Jellyfin } from '../Jellyfin'
 
 describe('jellyfin', () => {
 	;[
-		['ItemAdded.Movie', '[Jellyfin/MyServer] Added MyName'],
-		['ItemAdded.Season', '[Jellyfin/MyServer] Added MySeries'],
-		['ItemAdded.Episode', '[Jellyfin/MyServer] Added MySeries S01E01'],
-		['PlaybackStart', '[Jellyfin/MyServer] Start playing MyName'],
-		['PlaybackStop', '[Jellyfin/MyServer] Stop playing MyName'],
+		['ItemAdded.Movie', '[Jellyfin/MyServer] Added MovieTitle'],
+		['ItemAdded.Season', '[Jellyfin/MyServer] Added ShowTitle S01'],
+		['ItemAdded.SeasonUnknown', '[Jellyfin/MyServer] Added ShowTitle S'],
+		['ItemAdded.Episode', '[Jellyfin/MyServer] Added ShowTitle S01E01'],
+		['ItemAdded.EpisodeUnknown', '[Jellyfin/MyServer] Added ShowTitle S01E'],
+		['PlaybackStart', '[Jellyfin/MyServer] Start playing MovieTitle'],
+		['PlaybackStop', '[Jellyfin/MyServer] Stop playing MovieTitle'],
 	].forEach(([name, title]) => {
 		it(name, () => {
 			const fixture = createFixture(name)
@@ -31,35 +33,63 @@ function createFixture(name: string): Payload {
 		ServerUrl: 'https://jellyfin.com',
 		ServerId: 'serverId1',
 		ItemId: 'itemId1',
+	}
+	const movie = {
 		ItemType: 'Movie',
-		SeriesName: 'MySeries',
+		Name: 'MovieTitle',
+	}
+	const season = {
+		ItemType: 'Season',
+		SeriesName: 'ShowTitle',
+		SeasonNumber00: '01',
+		Name: 'Season 1',
+	}
+	const eposide = {
+		ItemType: 'Episode',
+		SeriesName: 'ShowTitle',
 		SeasonNumber00: '01',
 		EpisodeNumber00: '01',
-		Name: 'MyName',
 	}
 
 	const fixtureTypes = {
 		'ItemAdded.Movie': {
 			...common,
-			ItemType: 'Movie',
+			...movie,
 			NotificationType: 'ItemAdded',
 		},
 		'ItemAdded.Season': {
 			...common,
-			ItemType: 'Season',
+			...season,
 			NotificationType: 'ItemAdded',
+		},
+		'ItemAdded.SeasonUnknown': {
+			...common,
+			...season,
+			NotificationType: 'ItemAdded',
+			Name: 'Season Unknown',
+			SeasonNumber00: undefined,
 		},
 		'ItemAdded.Episode': {
 			...common,
-			ItemType: 'Episode',
+			...eposide,
 			NotificationType: 'ItemAdded',
 		},
+		'ItemAdded.EpisodeUnknown': {
+			...common,
+			...eposide,
+			NotificationType: 'ItemAdded',
+			Name: 'MySeries',
+			EpisodeNumber00: undefined,
+		},
+
 		PlaybackStart: {
 			...common,
+			...movie,
 			NotificationType: 'PlaybackStart',
 		},
 		PlaybackStop: {
 			...common,
+			...movie,
 			NotificationType: 'PlaybackStop',
 		},
 	}
