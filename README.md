@@ -1,6 +1,6 @@
 # 💌 Guten Email Notification 💌
 
-**Zero configuration, nfty like email notification service.** Supports various apps like Jellyfin, Komodo etc 
+**Zero configuration, ntfy-like email notification service.** Supports popular apps out of the box, including: Jellyfin, Komodo, and more.
 
 **Perfect for:** Self-hosted apps, NAS systems, monitoring tools, CI/CD pipelines, and any service that needs reliable email notifications.
 
@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/gutenye/email-notification?style=social)](https://github.com/gutenye/email-notification)
 [![License](https://img.shields.io/github/license/gutenye/email-notification?color=blue)](https://github.com/gutenye/email-notification/blob/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](https://github.com/gutenye/email-notification#-contribute)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
 
 ## 🌠️ Screenshots
@@ -22,26 +22,19 @@
 
 ## 🌟 Features
 
-- **Email Notiifcations**: keep your notification and history in your email inbox
-- **Simple to use**: Rest api, just a title and a body.
-- **Zero configuration**: Just put the url in the app, and it works out of box.
-- **Write Template**: write template in javascript, no more handlerbars, go templates.
-- **Support a lot of Apps**: Get notifed every thing from your NAS.
-- **Human friendly messages**: easy to read message
-
-**Why Email?** Unlike push notifications that can be lost, delayed, or blocked, email is:
-
-- **Universal** - Works on every device and platform
-- **Reliable** - Built-in retry and delivery confirmation
-- **Searchable** - Find any notification in your email client
-- **Persistent** - Never expires or gets lost
+- **Email Notifications**: Keep your notification history in your email inbox - never lose important alerts
+- **Simple to use**: REST API with just a title and body - simple and elegant
+- **Zero configuration**: Deploy once, works everywhere - just add url and start sending
+- **Custom Templates**: Write templates in JavaScript - no more Handlebars or Go templates needed
+- **Universal App Support**: Get notified from everything on your NAS - Jellyfin, Komodo, and 20+ more apps
+- **Human-friendly messages**: Clean, readable notifications that anyone can understand
 
 ## 📖 Documentation
 
-- [Send Messages](./docs/SendMessages.md)
-- [Deployment](./docs/Deployment.md)
-- [List of Supported Apps](./docs/SupportedApps.md)
-- [Development](./docs/Development.md)
+- [Send Messages](./docs/SendMessages.md): API usage, examples, and advanced features
+- [Quick Deploy](./docs/Deployment.md): One-click deployment to Cloudflare Workers
+- [Supported Apps](./src/templates/README.md): Pre-built templates for popular apps
+- [Development](./docs/Development.md): Local setup and development guide
 
 ## 🙏 Acknowledgments
 
@@ -50,20 +43,26 @@
 
 ## 🤝 Contributing
 
-We love contributions! Whether you’re fixing bugs, adding features, or improving documentation, your involvement makes this project better.
+We love contributions! Whether you're fixing bugs, adding features, or improving documentation, your involvement makes this project better.
 
 **How to Contribute:**
 
-1. Fork the Repository
-2. Open a Pull Request on Github
+1. **Fork** the Repository
+2. **Make** your changes (bug fixes, features, docs)
+3. **Test** your changes thoroughly
+4. **Open** a Pull Request on GitHub
+
+**Looking for ideas?** Check out our [issues](https://github.com/gutenye/email-notification/issues) for bugs and feature requests!
 
 ---
 
-Thank you for using Guten Email Notification! If you found it helpful, please ⭐️ star the project ️️⭐ on GitHub. If you have any questions, encounter issues, please refer to the documentation or report an issue on GitHub.
+Thank you for using Guten Email Notification! If you found it helpful, please ⭐️ **star the project** ⭐ on GitHub.
+
+**Need help?** Check our [documentation](#-documentation) or [report an issue](https://github.com/gutenye/email-notification/issues) if you encounter any problems.
 
 **Special Thanks to All Contributors:**
 
-[![](https://contrib.rocks/image?repo=gutenye/email-notification)](https://github.com/gutenye/email-notification/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=gutenye/email-notification)](https://github.com/gutenye/email-notification/graphs/contributors)
 
 ---
 

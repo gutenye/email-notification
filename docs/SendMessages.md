@@ -1,35 +1,67 @@
-# Send Messages
+# 📤 Send Messages
 
-## Usage
+Simple, minimal API that works just like ntfy - but with email delivery!
 
-- Simple, minial to use, like ntfy
+## 🚀 Basic Usage
 
-```sh
-curl HOST/API_KEY -d $'title\nmessage'
+Send a notification with title and body:
+
+```bash
+# Just a title and a body
+curl https://your-domain.workers.dev/YOUR_API_KEY -d $'Title\nBody'
+
+# Provide title in URL
+curl https://your-domain.workers.dev/YOUR_API_KEY?title=Title -d 'Body'
 ```
 
-### Custom Title
+## 🎯 Advanced Features
 
-```sh
-curl HOST/API_KEY?title=TITLE -d 'message'
+### 📧 Custom From/To Addresses
+
+Send from/to specific email addresses:
+
+```bash
+https://your-domain.workers.dev/YOUR_API_KEY?from=alerts@company.com&to=admin@company.com
 ```
 
-### Custom From/To
+### 🔍 Debug Mode
 
-```sh
-curl DOMAIN/API_KEY?from=EMAIL&to=EMAIL -d 'body'
+See full request details for troubleshooting:
+
+```bash
+https://your-domain.workers.dev/YOUR_API_KEY?debug=Title
 ```
 
-### Debug mode
+**Debug output includes:**
 
-```sh
-curl HOST/API_KEY?debug=TITLE -d 'body'   # display debug information include  url, request headers and body
+- Full request URL
+- Request headers
+- Request body
+- Response details
+
+### 🎨 Use a Template
+
+Use pre-built templates for rich formatting:
+
+```bash
+curl https://your-domain.workers.dev/YOUR_API_KEY?template=Jellyfin -d 'DATA'
 ```
 
-### Use Template
+**Available templates:** See our [Supported Apps](../src/templates/README.md) guide
 
-```sh
-curl HOST/API_KEY?template=TEMPLATE -d 'body'
+## 🔗 Integration Examples
+
+**GitHub Actions:**
+
+```yaml
+- name: Notify on failure
+  run: curl ${{ secrets.NOTIFICATION_URL }} -d "Build failed: ${{ github.workflow }}"
 ```
 
-see [a list of templates](./SupportedApps.md)
+**Cron Job:**
+
+```bash
+#!/usr/bin/env bash
+
+curl https://your-domain.workers.dev/YOUR_API_KEY -d $'Daily Backup\n$(date): Backup completed successfully'
+```

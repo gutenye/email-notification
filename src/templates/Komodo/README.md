@@ -1,6 +1,6 @@
-# 🧩 Komodo Email Notification 🧩
+# 🧩 Guten Email Notification for Komodo 🧩
 
-> Send [Komodo](https://github.com/moghtech/komodo) notifications to your email
+> Get instant email notifications for your [Komodo](https://github.com/moghtech/komodo) deployments and server status updates
 
 ## 🌠️ Screenshots
 
@@ -8,23 +8,32 @@
 
 ## 🌟 Features
 
-- **Human friendly messages**: easy to read message
-- **Email Notiifcations**: keep your notification and history in your email inbox
+- **📧 Email Notifications**: Keep your deployment history in your email inbox - never miss important updates
+- **👥 Human-friendly messages**: Clean, readable notifications that anyone can understand
+- **🚀 Real-time alerts**: Get notified instantly when deployments start, succeed, or fail
+- **🔧 Customizable**: Skip unwanted notification types to reduce email noise
 
 ## Getting Started
 
+1. **[Quick Deploy](../../docs/Deployment.md)** - Deploy Guten Email Notification
+
+2. **Configure Komodo Integration**
+
+Go to **Komodo Settings → Alerts** and add your notification URL:
+
 ```sh
-template=komodo
-sererName=MyServer
-komodoHost=https://my-server.com
---
-skip=StackStateChange,..  # skip sending notification for these types.
+https://YOUR_DOMAIN.workers.dev/YOUR_API_KEY?template=Komodo&serverName=MyServer&komodoHost=https://my-server.com
 ```
 
-Use it in Komodo
+**Configuration Parameters:**
+- `template=Komodo` - Uses the Komodo-specific email template
+- `serverName=MyServer` - Your server name (appears in email subject)
+- `komodoHost=https://my-server.com` - Your Komodo instance URL
+
+## Advanced Configiration
+
+###   Skip unwanted notification types
 
 ```sh
-Komodo - settings - alerts
-
-- Url: https://HOST/API_KEY?template=Komodo&serverName=MyServer&komodoHost=https://my-server.com
+&skip=StackStateChange,ServiceHealthCheck
 ```
