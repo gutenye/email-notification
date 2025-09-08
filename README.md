@@ -10,6 +10,9 @@ why zero configuration
 
 in jellyfin, ..
 
+## Documentation
+
+- [List of Supported Apps](./docs/SupportedApps.md)
 
 ## Usage
 
