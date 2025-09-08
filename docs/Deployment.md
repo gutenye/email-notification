@@ -19,7 +19,7 @@ Deploy Guten Email Notification to Cloudflare Workers in under 5 minutes!
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/gutenye/email-notification)
 
-**Step 3:** Configure Environment Variables
+**Step 3:** Configure Secrets
 
 ```bash
 # Generate a secure API key
