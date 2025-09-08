@@ -13,5 +13,5 @@
 ## Getting Started
 
 ```sh
-https://HOST/API_KEY
+Url: https://HOST/API_KEY?template=Hello
 ```

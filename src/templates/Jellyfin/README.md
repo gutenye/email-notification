@@ -11,3 +11,7 @@
 - **Email Notiifcations**: keep your notification and history in your email inbox
 
 ## Getting Started
+
+```sh
+Url: https://HOST/API_KEY?template=Jellyfin
+```

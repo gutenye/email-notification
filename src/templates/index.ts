@@ -1,6 +1,7 @@
 import invariant from 'tiny-invariant'
 import type { Message } from '../types'
-import { komodo } from './Komodo/komodo'
+import { Jellyfin } from './Jellyfin/Jellyfin'
+import { Komodo } from './Komodo/Komodo'
 
 export function getTemplate(templateName: string): Template {
 	const template = templates[templateName]
@@ -9,7 +10,8 @@ export function getTemplate(templateName: string): Template {
 }
 
 const templates: Record<string, Template | undefined> = {
-	komodo,
+	Komodo,
+	Jellyfin,
 }
 
 type Template = (payload: any, params: any) => Message

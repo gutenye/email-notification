@@ -23,10 +23,8 @@ skip=StackStateChange,..  # skip sending notification for these types.
 
 Use it in Komodo
 
-```
+```sh
 Komodo - settings - alerts
 
-- Url: https://CLOUDFLARE_WORKER/API_KEY?serverName=MyServer&komodoHost=https://my-server.com
+- Url: https://HOST/API_KEY?template=Komodo&serverName=MyServer&komodoHost=https://my-server.com
 ```
-
-

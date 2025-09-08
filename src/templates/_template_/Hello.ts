@@ -1,6 +1,6 @@
 import type { Message } from '../../types'
 
-export function hello(payload: Payload): Message {
+export function Hello(payload: Payload): Message {
 	const title = buildTitle(payload)
 	const message = buildMessage(payload)
 	return {

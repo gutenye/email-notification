@@ -1,7 +1,7 @@
 import type { Message } from '../../types'
 import { formatPercentage } from '../../utils/format'
 
-export function komodo(payload: Payload, params: Params): Message {
+export function Komodo(payload: Payload, params: Params): Message {
 	const { type } = payload.data
 	const { serverName } = params
 
