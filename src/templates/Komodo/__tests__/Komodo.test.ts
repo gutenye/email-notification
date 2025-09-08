@@ -1,20 +1,20 @@
 import { describe, expect, it } from 'vitest'
-import { komodo } from '../komodo'
+import { Komodo } from '../Komodo'
 
 const serverName = 'Server1'
 const komodoHost = 'https://komodo.com'
 
 describe('komodo', () => {
 	;[
-		['StackAutoUpdated', 'Server1: Stack1 image upgraded'],
-		['StackStateChange', 'Server1: Stack1 unhealthy -> stopped'],
-		['ServerCpu', 'Server1: CPU at 50%'],
-		['ServerDisk', 'Server1: disk used at 50%'],
-		['ScheduleRun', 'Server1: run schedule Global Auto Update'],
+		['StackAutoUpdated', '[Komodo/Server1] Stack1 image upgraded'],
+		['StackStateChange', '[Komodo/Server1] Stack1 unhealthy -> stopped'],
+		['ServerCpu', '[Komodo/Server1] CPU at 50%'],
+		['ServerDisk', '[Komodo/Server1] disk used at 50%'],
+		['ScheduleRun', '[Komodo/Server1] run schedule Global Auto Update'],
 	].forEach(([name, title]) => {
 		it(name, () => {
 			const fixture = createFixture(name)
-			const message = komodo(fixture, { serverName, komodoHost })
+			const message = Komodo(fixture, { serverName, komodoHost })
 			const result = {
 				title,
 				message: `

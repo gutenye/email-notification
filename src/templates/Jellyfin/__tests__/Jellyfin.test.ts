@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import type { Payload } from '../jellyfin'
-import { jellyfin } from '../jellyfin'
+import type { Payload } from '../Jellyfin'
+import { Jellyfin } from '../Jellyfin'
 
 describe('jellyfin', () => {
 	;[
@@ -12,7 +12,7 @@ describe('jellyfin', () => {
 	].forEach(([name, title]) => {
 		it(name, () => {
 			const fixture = createFixture(name)
-			const result = jellyfin(fixture)
+			const result = Jellyfin(fixture)
 			const expected = {
 				title,
 				message: `
