@@ -28,6 +28,7 @@
 - **Custom Templates**: Write templates in JavaScript - no more Handlebars or Go templates needed
 - **Universal App Support**: Get notified from everything on your NAS - Jellyfin, Komodo, and 20+ more apps
 - **Human-friendly messages**: Clean, readable notifications that anyone can understand
+- **Free & Unlimited Emails**: Send as many notifications as you want, no limits, no hidden fees
 
 ## 📖 Documentation
 

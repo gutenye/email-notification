@@ -4,12 +4,13 @@ Deploy Guten Email Notification to Cloudflare Workers in under 5 minutes!
 
 ## 📋 Prerequisites
 
-- ✅ **Cloudflare account**: with a domain
-- ✅ **Email address**: you can only send to your own emails
+- ✅ Have a domain in your Cloudflare account.
+- ✅ Emails can only be sent to verified addresses.
 
 ## 🚀 One-Click Deployment
 
 **Step 1:** Enable Cloudflare Email Routing
+
 1. Go to your Cloudflare dashboard
 2. Select your domain
 3. Navigate to **Email** → **Email Routing**
