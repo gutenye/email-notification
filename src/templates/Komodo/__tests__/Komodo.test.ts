@@ -1,3 +1,4 @@
+import { keyBy } from 'lodash-es'
 import { describe, expect, it } from 'vitest'
 import { Komodo } from '../Komodo'
 
@@ -9,8 +10,9 @@ describe('komodo', () => {
 		['StackAutoUpdated', '[Komodo/Server1] Stack1 image upgraded'],
 		['StackStateChange', '[Komodo/Server1] Stack1 unhealthy -> stopped'],
 		['ServerCpu', '[Komodo/Server1] CPU at 50%'],
-		['ServerDisk', '[Komodo/Server1] disk used at 50%'],
-		['ScheduleRun', '[Komodo/Server1] run schedule Global Auto Update'],
+		['ServerDisk', '[Komodo/Server1] Disk used at 50%'],
+		['ServerUnreachable', '[Komodo/Server1] Unreachable for 401 Unauthorized'],
+		['ScheduleRun', '[Komodo/Server1] Run schedule Global Auto Update'],
 	].forEach(([name, title]) => {
 		it(name, () => {
 			const fixture = createFixture(name)
@@ -28,58 +30,38 @@ ${JSON.stringify(fixture, null, 2)}
 })
 
 function createFixture(name: string) {
-	const data = {
-		StackAutoUpdated: {
-			type: 'StackAutoUpdated',
-			data: {
-				id: 'id1',
-				name: 'Stack1',
-				serverId: 'serverId1',
-				serverName: 'Server1',
-				images: ['gutenye/hello-node:latest'],
+	const data = [
+		createStack('StackAutoUpdated', {
+			images: ['gutenye/hello-node:latest'],
+		}),
+		createStack('StackStateChange', {
+			from: 'unhealthy',
+			to: 'stopped',
+		}),
+		createStack('StackStateChange', {
+			from: 'unhealthy',
+			to: 'stopped',
+		}),
+		createServer('ServerCpu', {
+			percentage: 50.12345,
+		}),
+		createServer('ServerDisk', {
+			path: '/',
+			usedGb: 100.123,
+			totalGb: 200.246,
+		}),
+		createServer('ServerUnreachable', {
+			err: {
+				error: '401 Unauthorized',
+				trace: ['request passkey invalid'],
 			},
-		},
-		StackStateChange: {
-			type: 'StackStateChange',
-			data: {
-				id: 'id1',
-				name: 'Stack1',
-				serverId: 'serverId1',
-				serverName: 'Server1',
-				from: 'unhealthy',
-				to: 'stopped',
-			},
-		},
-		ServerCpu: {
-			type: 'ServerCpu',
-			data: {
-				id: 'id1',
-				name: 'Server1',
-				region: null,
-				percentage: 50.12345,
-			},
-		},
-		ServerDisk: {
-			type: 'ServerDisk',
-			data: {
-				id: 'id1',
-				name: 'Server1',
-				region: null,
-				path: '/',
-				usedGb: 100.123,
-				totalGb: 200.246,
-			},
-		},
-		ScheduleRun: {
-			type: 'ScheduleRun',
-			data: {
-				id: 'id1',
-				name: 'Global Auto Update',
-				resourceType: 'Procedure',
-			},
-		},
-	}
-
+		}),
+		create('ScheduleRun', {
+			name: 'Global Auto Update',
+			resourceType: 'Procedure',
+		}),
+	]
+	const dataMap = keyBy(data, 'type') as Record<string, any>
 	return {
 		ts: 1756802981654,
 		resolved: true,
@@ -88,7 +70,42 @@ function createFixture(name: string) {
 			type: 'Stack',
 			id: 'targetId1',
 		},
-		data: data[name as keyof typeof data],
+		data: dataMap[name],
 		resolvedTs: 1756802981654,
+	}
+}
+
+function createStack(type: string, data: any) {
+	return {
+		type,
+		data: {
+			id: 'id1',
+			name: 'Stack1',
+			serverId: 'serverId1',
+			serverName: 'Server1',
+			...data,
+		},
+	}
+}
+
+function createServer(type: string, data: any) {
+	return {
+		type,
+		data: {
+			id: 'id1',
+			name: 'Server1',
+			region: null,
+			...data,
+		},
+	}
+}
+
+function create(type: string, data: any) {
+	return {
+		type,
+		data: {
+			id: 'id1',
+			...data,
+		},
 	}
 }

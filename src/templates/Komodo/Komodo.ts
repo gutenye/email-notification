@@ -37,7 +37,7 @@ function buildKomodoUrl(payload: Payload, params: Params): string {
 const handlers = {
 	ScheduleRun({ name }: ScheduleRun): HandlerReturn {
 		return {
-			action: `run schedule ${name}`,
+			action: `Run schedule ${name}`,
 		}
 	},
 
@@ -49,7 +49,13 @@ const handlers = {
 
 	ServerDisk({ usedGb, totalGb }: ServerDisk): HandlerReturn {
 		return {
-			action: `disk used at ${formatPercentage(usedGb / totalGb)}`,
+			action: `Disk used at ${formatPercentage(usedGb / totalGb)}`,
+		}
+	},
+
+	ServerUnreachable({ err }: ServerUnreachable): HandlerReturn {
+		return {
+			action: `Unreachable for ${err.error}`,
 		}
 	},
 
@@ -104,6 +110,13 @@ export interface ServerDisk extends ServerBase {
 	path: string
 	usedGb: number
 	totalGb: number
+}
+
+export interface ServerUnreachable extends ServerBase {
+	err: {
+		error: string
+		trace: string[]
+	}
 }
 
 export interface ScheduleRun extends Base {
