@@ -5,6 +5,7 @@ import { Jellyfin } from '../Jellyfin'
 describe('jellyfin', () => {
 	;[
 		['ItemAdded.Movie', '[Jellyfin/MyServer] Added MovieTitle'],
+		['ItemAdded.Series', '[Jellyfin/MyServer] Added ShowTitle'],
 		['ItemAdded.Season', '[Jellyfin/MyServer] Added ShowTitle S01'],
 		['ItemAdded.SeasonUnknown', '[Jellyfin/MyServer] Added ShowTitle S'],
 		['ItemAdded.Episode', '[Jellyfin/MyServer] Added ShowTitle S01E01'],
@@ -38,6 +39,10 @@ function createFixture(name: string): Payload {
 		ItemType: 'Movie',
 		Name: 'MovieTitle',
 	}
+	const series = {
+		ItemType: 'Series',
+		Name: 'ShowTitle',
+	}
 	const season = {
 		ItemType: 'Season',
 		SeriesName: 'ShowTitle',
@@ -55,6 +60,11 @@ function createFixture(name: string): Payload {
 		'ItemAdded.Movie': {
 			...common,
 			...movie,
+			NotificationType: 'ItemAdded',
+		},
+		'ItemAdded.Series': {
+			...common,
+			...series,
 			NotificationType: 'ItemAdded',
 		},
 		'ItemAdded.Season': {

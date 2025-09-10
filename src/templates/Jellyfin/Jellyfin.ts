@@ -41,6 +41,8 @@ function buildItemName(payload: Payload): string {
 		return `${SeriesName} S${SeasonNumber00}E${EpisodeNumber00 || ''}`
 	} else if (ItemType === 'Movie') {
 		return Name
+	} else if (ItemType === 'Series') {
+		return Name
 	}
 	return Name
 }
