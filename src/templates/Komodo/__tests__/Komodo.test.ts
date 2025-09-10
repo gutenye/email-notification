@@ -11,7 +11,14 @@ describe('komodo', () => {
 		['StackStateChange', '[Komodo/Server1] Stack1 unhealthy -> stopped'],
 		['ServerCpu', '[Komodo/Server1] CPU at 50%'],
 		['ServerDisk', '[Komodo/Server1] Disk used at 50%'],
-		['ServerUnreachable', '[Komodo/Server1] Unreachable for 401 Unauthorized'],
+		[
+			'ServerUnreachable',
+			'[Komodo/Server1] Server unreachable for 401 Unauthorized',
+		],
+		[
+			'ServerVersionMismatch',
+			'[Komodo/Server1] Server version mismatch: 1.19.2 vs 1.19.3',
+		],
 		['ScheduleRun', '[Komodo/Server1] Run schedule Global Auto Update'],
 	].forEach(([name, title]) => {
 		it(name, () => {
@@ -55,6 +62,10 @@ function createFixture(name: string) {
 				error: '401 Unauthorized',
 				trace: ['request passkey invalid'],
 			},
+		}),
+		createServer('ServerVersionMismatch', {
+			serverVersion: '1.19.3',
+			coreVersion: '1.19.2',
 		}),
 		create('ScheduleRun', {
 			name: 'Global Auto Update',

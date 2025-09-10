@@ -55,7 +55,16 @@ const handlers = {
 
 	ServerUnreachable({ err }: ServerUnreachable): HandlerReturn {
 		return {
-			action: `Unreachable for ${err.error}`,
+			action: `Server unreachable for ${err.error}`,
+		}
+	},
+
+	ServerVersionMismatch({
+		serverVersion,
+		coreVersion,
+	}: ServerVersionMismatch): HandlerReturn {
+		return {
+			action: `Server version mismatch: ${coreVersion} vs ${serverVersion}`,
 		}
 	},
 
@@ -117,6 +126,11 @@ export interface ServerUnreachable extends ServerBase {
 		error: string
 		trace: string[]
 	}
+}
+
+export interface ServerVersionMismatch extends ServerBase {
+	serverVersion: string
+	coreVersion: string
 }
 
 export interface ScheduleRun extends Base {
