@@ -35,7 +35,16 @@
 
 ### Skip unwanted notification types
 
+Via url
+
 ```sh
 &skip=StackStateChange,ServiceHealthCheck
 ```
+
+Via Environment
+
+```sh
+KOMODO_SKIP=..
+```
+
 - skip: notification type

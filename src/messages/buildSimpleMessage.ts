@@ -3,6 +3,7 @@ import type { Message } from '#/types'
 export async function buildSimpleMessage(
 	request: Request,
 	params: Params = {},
+	env: Env,
 ): Promise<Message> {
 	const { title } = params
 	const body = await request.text()

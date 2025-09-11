@@ -1,9 +1,17 @@
 import type { Message } from '../../types'
 import { formatPercentage } from '../../utils/format'
 
-export function Komodo(payload: Payload, params: Params): Message {
+export function Komodo(payload: Payload, params: Params, env: Env): Message {
 	const { type } = payload.data
 	const { serverName } = params
+
+	// skip
+	const skip = params.skip?.split(',') || env.KOMODO_SKIP?.split(',') || []
+	if (skip.includes(type)) {
+		return {
+			skip: `Skipped ${type}`,
+		}
+	}
 
 	// title
 	let action = type

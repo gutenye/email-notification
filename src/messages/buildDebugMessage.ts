@@ -4,6 +4,7 @@ import type { Message } from '#/types'
 export async function buildDebugMessage(
 	request: Request,
 	params: Params = {},
+	env: Env,
 ): Promise<Message> {
 	const method = request.method
 	const url = request.url

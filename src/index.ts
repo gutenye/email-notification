@@ -19,11 +19,15 @@ export default {
 
 			let message: Message
 			if ('debug' in params) {
-				message = await buildDebugMessage(request, params)
+				message = await buildDebugMessage(request, params, env)
 			} else if (params.template) {
-				message = await buildTemplateMessage(request, params)
+				message = await buildTemplateMessage(request, params, env)
 			} else {
-				message = await buildSimpleMessage(request, params)
+				message = await buildSimpleMessage(request, params, env)
+			}
+
+			if (message.skip) {
+				return okResponse(message)
 			}
 
 			const from = params.from || env.DEFAULT_FROM

@@ -1,4 +1,5 @@
 export type Message = {
-	title: string
-	message: string
+	title?: string
+	message?: string
+	skip?: string
 }

@@ -23,7 +23,7 @@ describe('komodo', () => {
 	].forEach(([name, title]) => {
 		it(name, () => {
 			const fixture = createFixture(name)
-			const message = Komodo(fixture, { serverName, komodoHost })
+			const message = Komodo(fixture, { serverName, komodoHost }, {})
 			const result = {
 				title,
 				message: `
@@ -33,6 +33,52 @@ ${JSON.stringify(fixture, null, 2)}
 			}
 			expect(message).toEqual(result)
 		})
+	})
+
+	it('skip', () => {
+		const fixture = createFixture('StackStateChange')
+		const message = Komodo(
+			fixture,
+			{ serverName, komodoHost },
+			{ KOMODO_SKIP: 'StackStateChange,ServerCpu' },
+		)
+		expect(message.skip).toEqual('Skipped StackStateChange')
+
+		const fixture2 = createFixture('ServerCpu')
+		const message2 = Komodo(
+			fixture2,
+			{ serverName, komodoHost },
+			{ KOMODO_SKIP: 'StackStateChange,ServerCpu' },
+		)
+		expect(message2.skip).toEqual('Skipped ServerCpu')
+
+		const fixture3 = createFixture('StackAutoUpdated')
+		const message3 = Komodo(
+			fixture3,
+			{ serverName, komodoHost },
+			{ KOMODO_SKIP: 'StackStateChange,ServerCpu' },
+		)
+		expect(message3.skip).toBeUndefined()
+		expect(message3.title).toBeDefined()
+
+		// higher priority
+		const fixture4 = createFixture('StackAutoUpdated')
+		const message4 = Komodo(
+			fixture4,
+			{ serverName, komodoHost, skip: 'StackAutoUpdated,StackStateChange' },
+			{ KOMODO_SKIP: '' },
+		)
+		expect(message4.skip).toBeDefined()
+		expect(message4.title).toBeUndefined()
+
+		const fixture5 = createFixture('StackAutoUpdated')
+		const message5 = Komodo(
+			fixture5,
+			{ serverName, komodoHost, skip: '' },
+			{ KOMODO_SKIP: 'StackAutoUpdated,ServerCpu' },
+		)
+		expect(message5.skip).toBeUndefined()
+		expect(message5.title).toBeDefined()
 	})
 })
 
