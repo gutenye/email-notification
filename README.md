@@ -18,7 +18,7 @@
 
 ![Screenshot](./docs/screenshot.png)
 
-*Clean, readable email notifications that work with any app or service.*
+_Clean, readable email notifications that work with any app or service._
 
 ## 🌟 Features
 
@@ -34,7 +34,7 @@
 
 - [Send Messages](./docs/SendMessages.md): API usage, examples, and advanced features
 - [Quick Deploy](./docs/Deployment.md): One-click deployment to Cloudflare Workers
-- [Supported Apps](./src/templates/SupportedApps.md): Pre-built templates for popular apps
+- [Supported Apps](./src/templates/Templates.md): Pre-built templates for popular apps
 - [Development](./docs/Development.md): Local setup and development guide
 
 ## 🤝 Contributing
