@@ -38,7 +38,7 @@
 Via url
 
 ```sh
-&skip=StackStateChange,ServiceHealthCheck
+&skip=StackStateChange,ServiceHealthCheck,ScheduleRun.Global Auto Update
 ```
 
 Via Environment
@@ -46,5 +46,3 @@ Via Environment
 ```sh
 KOMODO_SKIP=..
 ```
-
-- skip: notification type

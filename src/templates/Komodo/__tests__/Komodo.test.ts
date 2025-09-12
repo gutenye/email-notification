@@ -100,8 +100,8 @@ function createFixture(name: string) {
 		}),
 		createServer('ServerDisk', {
 			path: '/',
-			usedGb: 100.123,
-			totalGb: 200.246,
+			used_gb: 100.123,
+			total_gb: 200.246,
 		}),
 		createServer('ServerUnreachable', {
 			err: {
@@ -110,12 +110,12 @@ function createFixture(name: string) {
 			},
 		}),
 		createServer('ServerVersionMismatch', {
-			serverVersion: '1.19.3',
-			coreVersion: '1.19.2',
+			server_version: '1.19.3',
+			core_version: '1.19.2',
 		}),
 		create('ScheduleRun', {
 			name: 'Global Auto Update',
-			resourceType: 'Procedure',
+			resource_type: 'Procedure',
 		}),
 	]
 	const dataMap = keyBy(data, 'type') as Record<string, any>
@@ -128,7 +128,7 @@ function createFixture(name: string) {
 			id: 'targetId1',
 		},
 		data: dataMap[name],
-		resolvedTs: 1756802981654,
+		resolved_ts: 1756802981654,
 	}
 }
 
@@ -138,8 +138,8 @@ function createStack(type: string, data: any) {
 		data: {
 			id: 'id1',
 			name: 'Stack1',
-			serverId: 'serverId1',
-			serverName: 'Server1',
+			server_id: 'serverId1',
+			server_name: 'Server1',
 			...data,
 		},
 	}

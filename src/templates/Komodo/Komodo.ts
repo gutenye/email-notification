@@ -55,9 +55,9 @@ const handlers = {
 		}
 	},
 
-	ServerDisk({ usedGb, totalGb }: ServerDisk): HandlerReturn {
+	ServerDisk({ used_gb, total_gb }: ServerDisk): HandlerReturn {
 		return {
-			action: `Disk used at ${formatPercentage(usedGb / totalGb)}`,
+			action: `Disk used at ${formatPercentage(used_gb / total_gb)}`,
 		}
 	},
 
@@ -68,11 +68,11 @@ const handlers = {
 	},
 
 	ServerVersionMismatch({
-		serverVersion,
-		coreVersion,
+		server_version,
+		core_version,
 	}: ServerVersionMismatch): HandlerReturn {
 		return {
-			action: `Server version mismatch: ${coreVersion} vs ${serverVersion}`,
+			action: `Server version mismatch: ${core_version} vs ${server_version}`,
 		}
 	},
 
@@ -125,8 +125,8 @@ export interface ServerCpu extends ServerBase {
 
 export interface ServerDisk extends ServerBase {
 	path: string
-	usedGb: number
-	totalGb: number
+	used_gb: number
+	total_gb: number
 }
 
 export interface ServerUnreachable extends ServerBase {
@@ -137,12 +137,12 @@ export interface ServerUnreachable extends ServerBase {
 }
 
 export interface ServerVersionMismatch extends ServerBase {
-	serverVersion: string
-	coreVersion: string
+	server_version: string
+	core_version: string
 }
 
 export interface ScheduleRun extends Base {
-	resourceType: string
+	resource_type: string
 }
 
 export type Payload = {
@@ -157,7 +157,7 @@ export type Payload = {
 		type: string
 		data: Data
 	}
-	resolvedTs: number
+	resolved_ts: number
 }
 
 type Params = {
