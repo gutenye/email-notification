@@ -1,7 +1,7 @@
 import { getTemplate } from '#/templates'
 import type { Message } from '#/types'
 
-export async function buildTemplateMessage(
+export async function buildJsonMessage(
 	request: Request,
 	params: Params,
 	env: Env,

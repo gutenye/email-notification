@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { buildSimpleMessage } from '../buildSimpleMessage'
+import { buildTextMessage } from '../buildTextMessage'
 
 describe('buildSimpleMessage', () => {
 	it('should parse message', async () => {
-		const message = await buildSimpleMessage(
+		const message = await buildTextMessage(
 			new Request('https://example.com', {
 				method: 'POST',
 				body: 'MyTitle\nLine1\nLine2',
@@ -17,7 +17,7 @@ describe('buildSimpleMessage', () => {
 	})
 
 	it('should parse message with title only', async () => {
-		const message = await buildSimpleMessage(
+		const message = await buildTextMessage(
 			new Request('https://example.com', { method: 'POST', body: 'MyTitle' }),
 		)
 		const expected = {
@@ -28,7 +28,7 @@ describe('buildSimpleMessage', () => {
 	})
 
 	it('should parse message with \\n inbody', async () => {
-		const message = await buildSimpleMessage(
+		const message = await buildTextMessage(
 			new Request('https://example.com', {
 				method: 'POST',
 				body: 'MyTitle\\nLine1\\nLine2',
@@ -42,7 +42,7 @@ describe('buildSimpleMessage', () => {
 	})
 
 	it('support title parameter', async () => {
-		const message = await buildSimpleMessage(
+		const message = await buildTextMessage(
 			new Request('https://example.com', {
 				method: 'POST',
 				body: 'Line1\nLine2',

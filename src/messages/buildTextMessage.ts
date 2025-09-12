@@ -1,6 +1,6 @@
 import type { Message } from '#/types'
 
-export async function buildSimpleMessage(
+export async function buildTextMessage(
 	request: Request,
 	params: Params = {},
 	env: Env,

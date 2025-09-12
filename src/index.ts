@@ -1,6 +1,6 @@
 import { buildDebugMessage } from './messages/buildDebugMessage'
-import { buildSimpleMessage } from './messages/buildSimpleMessage'
-import { buildTemplateMessage } from './messages/buildTemplateMessage'
+import { buildJsonMessage } from './messages/buildJsonMessage'
+import { buildTextMessage } from './messages/buildTextMessage'
 import { sendEmail } from './sendEmail'
 import type { Message } from './types'
 import { errorResponse, okResponse } from './utils'
@@ -21,9 +21,9 @@ export default {
 			if ('debug' in params) {
 				message = await buildDebugMessage(request, params, env)
 			} else if (params.template) {
-				message = await buildTemplateMessage(request, params, env)
+				message = await buildJsonMessage(request, params, env)
 			} else {
-				message = await buildSimpleMessage(request, params, env)
+				message = await buildTextMessage(request, params, env)
 			}
 
 			if (message.skip) {

@@ -1,6 +1,7 @@
 import type { Message } from '../../types'
 
-export function Hello(payload: Payload): Message {
+// Payload: any json object
+export function Hello(payload: Payload, params: Params, env: Env): Message {
 	const title = buildTitle(payload)
 	const message = buildMessage(payload)
 	return {
@@ -36,3 +37,5 @@ export type Payload = {
 	itemId: string
 	serverUrl: string
 }
+
+export type Params = {}
