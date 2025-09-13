@@ -1,88 +1,137 @@
 import { keyBy } from 'lodash-es'
 import { describe, expect, it } from 'vitest'
-import { Komodo } from '../Komodo'
+import { invokeWorker } from '#/test'
+import type { Message } from '#/types'
 
-const serverName = 'Server1'
-const komodoHost = 'https://komodo.com'
+const normalFixtures = (): Fixture[] => [
+	// { name, body, path, env, expected }
+	{
+		name: 'type StackAutoUpdated',
+		body: createBody('StackAutoUpdated'),
+		expected: createExpected('[Komodo/Server1] Stack1 image upgraded'),
+	},
+	{
+		name: 'type StackStateChange',
+		body: createBody('StackStateChange'),
+		expected: createExpected('[Komodo/Server1] Stack1 unhealthy -> stopped'),
+	},
 
-describe('komodo', () => {
-	;[
-		['StackAutoUpdated', '[Komodo/Server1] Stack1 image upgraded'],
-		['StackStateChange', '[Komodo/Server1] Stack1 unhealthy -> stopped'],
-		['ServerCpu', '[Komodo/Server1] CPU at 50%'],
-		['ServerDisk', '[Komodo/Server1] Disk used at 50%'],
-		[
-			'ServerUnreachable',
+	{
+		name: 'type ServerCpu',
+		body: createBody('ServerCpu'),
+		expected: createExpected('[Komodo/Server1] CPU at 50%'),
+	},
+	{
+		name: 'type ServerDisk',
+		body: createBody('ServerDisk'),
+		expected: createExpected('[Komodo/Server1] Disk used at 50%'),
+	},
+	{
+		name: 'type ServerUnreachable',
+		body: createBody('ServerUnreachable'),
+		expected: createExpected(
 			'[Komodo/Server1] Server unreachable for 401 Unauthorized',
-		],
-		[
-			'ServerVersionMismatch',
+		),
+	},
+	{
+		name: 'type ServerVersionMismatch',
+		body: createBody('ServerVersionMismatch'),
+		expected: createExpected(
 			'[Komodo/Server1] Server version mismatch: 1.19.2 vs 1.19.3',
-		],
-		['ScheduleRun', '[Komodo/Server1] Run schedule Global Auto Update'],
-	].forEach(([name, title]) => {
-		it(name, () => {
-			const fixture = createFixture(name)
-			const message = Komodo(fixture, { serverName, komodoHost }, {})
-			const result = {
-				title,
-				message: `
-https://komodo.com/stacks/targetId1
-${JSON.stringify(fixture, null, 2)}
-      `.trim(),
+		),
+	},
+	{
+		name: 'type ScheduleRun',
+		body: createBody('ScheduleRun'),
+		expected: createExpected(
+			'[Komodo/Server1] Run schedule Global Auto Update',
+		),
+	},
+]
+
+const skipFixtures = (): Fixture[] => [
+	{
+		name: 'skip via env: a in a,b',
+		body: createBody('StackStateChange'),
+		env: { KOMODO_SKIP: 'StackStateChange,ServerCpu' },
+		expected: {
+			skip: 'Skipped StackStateChange',
+		},
+	},
+	{
+		name: 'skip via env: b in a,b',
+		body: createBody('ServerCpu'),
+		env: { KOMODO_SKIP: 'StackStateChange,ServerCpu' },
+		expected: {
+			skip: 'Skipped ServerCpu',
+		},
+	},
+	{
+		name: 'skip via param',
+		body: createBody('StackStateChange'),
+		path: 'skip=StackAutoUpdated,StackStateChange',
+		expected: {
+			skip: 'Skipped StackStateChange',
+		},
+	},
+	{
+		name: 'skip not match',
+		body: createBody('StackAutoUpdated'),
+		env: { KOMODO_SKIP: 'StackStateChange,ServerCpu' },
+		expected: {
+			skip: undefined,
+			title: 'defined',
+		},
+	},
+	{
+		name: 'skip param overrides env: a in param',
+		body: createBody('StackAutoUpdated'),
+		path: 'skip=StackAutoUpdated,StackStateChange',
+		env: { KOMODO_SKIP: 'ServerCpu' },
+		expected: {
+			skip: 'defined',
+			title: 'undefined',
+		},
+	},
+	{
+		name: 'skip param overrides env: a in env',
+		body: createBody('ServerCpu'),
+		path: 'skip=StackAutoUpdated,StackStateChange',
+		env: { KOMODO_SKIP: 'ServerCpu' },
+		expected: createExpected('[Komodo/Server1] CPU at 50%'),
+	},
+	{
+		name: 'skip param overries env: param is empty',
+		body: createBody('ServerCpu'),
+		path: 'skip=',
+		env: { KOMODO_SKIP: 'StackAutoUpdated,ServerCpu' },
+		expected: createExpected('[Komodo/Server1] CPU at 50%'),
+	},
+]
+
+function main() {
+	// const fixtures = [...normalFixtures(), ...skipFixtures()]
+	const fixtures = []
+
+	fixtures.forEach(({ name, body, path = '', env = {}, expected }) => {
+		it(name, async () => {
+			const response = await invokeWorker(
+				`/testKey?template=Komodo&serverName=Server1&komodoHost=https://komodo.com&${path}`,
+				{
+					method: 'POST',
+					body: JSON.stringify(body),
+				},
+				env,
+			)
+			if (typeof expected.message === 'function') {
+				expected.message = expected.message({ body })
 			}
-			expect(message).toEqual(result)
+			expect(await response.json()).toEqual(expected)
 		})
 	})
+}
 
-	it('skip', () => {
-		const fixture = createFixture('StackStateChange')
-		const message = Komodo(
-			fixture,
-			{ serverName, komodoHost },
-			{ KOMODO_SKIP: 'StackStateChange,ServerCpu' },
-		)
-		expect(message.skip).toEqual('Skipped StackStateChange')
-
-		const fixture2 = createFixture('ServerCpu')
-		const message2 = Komodo(
-			fixture2,
-			{ serverName, komodoHost },
-			{ KOMODO_SKIP: 'StackStateChange,ServerCpu' },
-		)
-		expect(message2.skip).toEqual('Skipped ServerCpu')
-
-		const fixture3 = createFixture('StackAutoUpdated')
-		const message3 = Komodo(
-			fixture3,
-			{ serverName, komodoHost },
-			{ KOMODO_SKIP: 'StackStateChange,ServerCpu' },
-		)
-		expect(message3.skip).toBeUndefined()
-		expect(message3.title).toBeDefined()
-
-		// higher priority
-		const fixture4 = createFixture('StackAutoUpdated')
-		const message4 = Komodo(
-			fixture4,
-			{ serverName, komodoHost, skip: 'StackAutoUpdated,StackStateChange' },
-			{ KOMODO_SKIP: '' },
-		)
-		expect(message4.skip).toBeDefined()
-		expect(message4.title).toBeUndefined()
-
-		const fixture5 = createFixture('StackAutoUpdated')
-		const message5 = Komodo(
-			fixture5,
-			{ serverName, komodoHost, skip: '' },
-			{ KOMODO_SKIP: 'StackAutoUpdated,ServerCpu' },
-		)
-		expect(message5.skip).toBeUndefined()
-		expect(message5.title).toBeDefined()
-	})
-})
-
-function createFixture(name: string) {
+function createBody(name: string): any {
 	const data = [
 		createStack('StackAutoUpdated', {
 			images: ['gutenye/hello-node:latest'],
@@ -166,3 +215,29 @@ function create(type: string, data: any) {
 		},
 	}
 }
+
+interface Fixture {
+	name: string
+	body: string
+	path?: string
+	env?: Record<string, string>
+	expected: Message
+}
+
+const createMessage: CreateMessage = ({ body }) => {
+	return `
+https://komodo.com/stacks/targetId1
+${JSON.stringify(body, null, 2)}
+	`.trim()
+}
+
+type CreateMessage = (options: { body: Record<string, any> }) => string
+
+function createExpected(title: string): Message {
+	return {
+		title,
+		message: createMessage,
+	}
+}
+
+main()

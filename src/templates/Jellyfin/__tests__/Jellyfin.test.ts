@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Payload } from '../Jellyfin'
-import { Jellyfin } from '../Jellyfin'
+import { invokeWorker } from '#/test'
 
 describe('jellyfin', () => {
 	;[
@@ -13,22 +13,24 @@ describe('jellyfin', () => {
 		['PlaybackStart', '[Jellyfin/MyServer] Start playing MovieTitle'],
 		['PlaybackStop', '[Jellyfin/MyServer] Stop playing MovieTitle'],
 	].forEach(([name, title]) => {
-		it(name, () => {
-			const fixture = createFixture(name)
-			const result = Jellyfin(fixture)
-			const expected = {
+		it(name, async() => {
+			const body = createBody(name)
+			const response = await invokeWorker(`/testKey?template=Jellyfin`, {
+				method: 'POST',
+				body: JSON.stringify(body),
+			})
+			expect(await response.json()).toEqual( {
 				title,
 				message: `
 https://jellyfin.com/web/#/details?id=itemId1&serverId=serverId1
-${JSON.stringify(fixture, null, 2)}
+${JSON.stringify(body, null, 2)}
       `.trim(),
-			}
-			expect(result).toEqual(expected)
+		})
 		})
 	})
 })
 
-function createFixture(name: string): Payload {
+function createBody(name: string): Payload {
 	const common = {
 		ServerName: 'MyServer',
 		ServerUrl: 'https://jellyfin.com',
@@ -56,7 +58,7 @@ function createFixture(name: string): Payload {
 		EpisodeNumber00: '01',
 	}
 
-	const fixtureTypes = {
+	const fixtureTypes: Record<string, any> = {
 		'ItemAdded.Movie': {
 			...common,
 			...movie,
@@ -104,5 +106,5 @@ function createFixture(name: string): Payload {
 		},
 	}
 
-	return fixtureTypes[name as keyof typeof fixtureTypes] as Payload
+	return fixtureTypes[name] as Payload
 }
