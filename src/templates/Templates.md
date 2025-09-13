@@ -11,3 +11,4 @@ Pre-built templates and integrations for popular self-hosted applications and se
 | [GitHub Actions](./GithubActions.md)    | Get build status updates in your email                  |
 | [BiliBiliToolPro](./BiliBiliToolPro.md) | Track Bilibili daily check-in results and rewards       |
 | [DailyCheckIn](./DailyCheckIn.md)       | Monitor various platform daily check-in results         |
+| [GoBackup](./GoBackup.md)               | Get notified on database backups                        |
