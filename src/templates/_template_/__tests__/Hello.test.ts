@@ -1,42 +1,15 @@
 import { describe, expect, it } from 'vitest'
-import type { Payload } from '../Hello'
-import { Hello } from '../Hello'
+import { createInvoke } from '#/test'
+import type { CreateExpected, Fixture } from '#/test/types'
 
-describe.skip('hello', () => {
-	;[
-		['Type1.SubType1', '[Hello/MyServer] Action1'],
-		['Type2', '[Hello/MyServer] Action2'],
-	].forEach(([name, title]) => {
-		it(name, () => {
-			const fixture = createFixture(name)
-			const result = Hello(fixture)
-			const expected = {
-				title,
-				message: `
-https://hello.com/itemId
-${JSON.stringify(fixture, null, 2)}
-      `.trim(),
-			}
-			expect(result).toEqual(expected)
+const invoke = createInvoke('template=Hello')
+
+describe.skip('group', () => {
+	it('group Hello', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('StackAutoUpdated'),
+			expected: createExpected('[Komodo/Server1] Stack1 image upgraded'),
 		})
+		expect(result).toEqual(expected)
 	})
 })
-
-function createFixture(name: string): Payload {
-	const common = {
-		serverName: 'MyServer',
-		serverUrl: 'https://hello.com',
-		itemId: 'itemId1',
-		type: 'Type1',
-	}
-
-	const fixtureTypes = {
-		'Type1.SubType1': {
-			...common,
-			type: 'Type1',
-			subType: 'SubType1',
-		},
-	}
-
-	return fixtureTypes[name as keyof typeof fixtureTypes] as Payload
-}

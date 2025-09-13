@@ -5,11 +5,37 @@ import {
 } from 'cloudflare:test'
 import { vi } from 'vitest'
 import worker from '#/index'
+import type { Fixture } from './types'
 
 const DEFAULT_ENV = {
 	API_KEYS: 'testKey',
 	DEFAULT_FROM: 'from@test.com',
 	DEFAULT_TO: 'to@test.com',
+}
+
+export function createInvoke(basePath: string) {
+	return async function invoke({
+		body,
+		path = '',
+		env = {},
+		expected,
+	}: Fixture) {
+		const response = await invokeWorker(
+			`/testKey?${basePath}&${path}`,
+			{
+				method: 'POST',
+				body: JSON.stringify(body),
+			},
+			env,
+		)
+		if (typeof expected === 'function') {
+			expected = expected({ body })
+		}
+		return {
+			result: await response.json(),
+			expected,
+		}
+	}
 }
 
 export async function invokeWorker(

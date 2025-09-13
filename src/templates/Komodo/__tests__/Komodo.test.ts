@@ -1,7 +1,11 @@
 import { keyBy } from 'lodash-es'
 import { describe, expect, it } from 'vitest'
-import { invokeWorker } from '#/test'
-import type { Message } from '#/types'
+import { createInvoke } from '#/test'
+import type { CreateExpected } from '#/test/types'
+
+const invoke = createInvoke(
+	'template=Komodo&serverName=Server1&komodoHost=https://komodo.com',
+)
 
 describe('type', () => {
 	it('type StackAutoUpdated', async () => {
@@ -143,24 +147,6 @@ describe('skip', () => {
 	})
 })
 
-async function invoke({ body, path = '', env = {}, expected }: Fixture) {
-	const response = await invokeWorker(
-		`/testKey?template=Komodo&serverName=Server1&komodoHost=https://komodo.com&${path}`,
-		{
-			method: 'POST',
-			body: JSON.stringify(body),
-		},
-		env,
-	)
-	if (typeof expected === 'function') {
-		expected = expected({ body })
-	}
-	return {
-		result: await response.json(),
-		expected,
-	}
-}
-
 function createBody(name: string): any {
 	const data = [
 		createStack('StackAutoUpdated', {
@@ -245,15 +231,6 @@ function create(type: string, data: any) {
 		},
 	}
 }
-
-interface Fixture {
-	body: string
-	path?: string
-	env?: Record<string, string>
-	expected: Message | CreateExpected
-}
-
-type CreateExpected = (options: { body: Record<string, any> }) => Message
 
 function createExpected(title: string): CreateExpected {
 	return ({ body }) => ({

@@ -1,35 +1,34 @@
 import { describe, expect, it } from 'vitest'
-import { invokeWorker } from '#/test'
+import { createInvoke } from '#/test'
+import type { CreateExpected, Fixture } from '#/test/types'
 
-describe('Generic', () => {
-	;(
-		[
-			// path, body, (expected) title, message
-			[
-				'',
-				'{ "title": "MyTitle", "message": "MyMessage" }',
-				'MyTitle',
-				'MyMessage',
-			],
-			[
-				'titleKey=a&messageKey=b',
-				'{ "a": "MyTitle", "b": "MyMessage" }',
-				'MyTitle',
-				'MyMessage',
-			],
-		] as Fixture[]
-	).forEach(([path, body, title, message]) => {
-		it(path, async () => {
-			const response = await invokeWorker(`/testKey?template=Generic&${path}`, {
-				method: 'POST',
-				body,
-			})
-			expect(await response.json()).toEqual({
-				title,
-				message,
-			})
-		})
+const invoke = createInvoke('template=Generic')
+
+it('default', async () => {
+	const { result, expected } = await invoke({
+		body: {
+			title: 'MyTitle',
+			message: 'MyMessage',
+		},
+		expected: {
+			title: 'MyTitle',
+			message: 'MyMessage',
+		},
 	})
+	expect(result).toEqual(expected)
 })
 
-type Fixture = [string, string, string, string]
+it('custom titleKey, messageKey', async () => {
+	const { result, expected } = await invoke({
+		path: 'titleKey=a&messageKey=b',
+		body: {
+			a: 'MyTitle',
+			b: 'MyMessage',
+		},
+		expected: {
+			title: 'MyTitle',
+			message: 'MyMessage',
+		},
+	})
+	expect(result).toEqual(expected)
+})
