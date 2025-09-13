@@ -1,40 +1,35 @@
 import { describe, expect, it } from 'vitest'
-import type { Payload } from '../Generic'
-import { Generic } from '../Generic'
+import { invokeWorker } from '#/test'
 
 describe('Generic', () => {
 	;(
 		[
-			[{ title: 'MyTitle', message: 'MyMessage' }, {}, 'MyTitle', 'MyMessage'],
+			// path, body, (expected) title, message
 			[
-				{ a: 'MyTitle', b: 'MyMessage' },
-				{ titleKey: 'a', messageKey: 'b' },
+				'',
+				'{ "title": "MyTitle", "message": "MyMessage" }',
+				'MyTitle',
+				'MyMessage',
+			],
+			[
+				'titleKey=a&messageKey=b',
+				'{ "a": "MyTitle", "b": "MyMessage" }',
 				'MyTitle',
 				'MyMessage',
 			],
 		] as Fixture[]
-	).forEach(([payload, params, title, message]) => {
-		it(payload, () => {
-			const result = Generic(payload, params)
-			const expected = {
+	).forEach(([path, body, title, message]) => {
+		it(path, async () => {
+			const response = await invokeWorker(`/testKey?template=Generic&${path}`, {
+				method: 'POST',
+				body,
+			})
+			expect(await response.json()).toEqual({
 				title,
 				message,
-			}
-			expect(result).toEqual(expected)
+			})
 		})
 	})
 })
 
-function createFixture(name: string): Payload {
-	const fixtureTypes = {
-		'Type1.SubType1': {
-			...common,
-			type: 'Type1',
-			subType: 'SubType1',
-		},
-	}
-
-	return fixtureTypes[name as keyof typeof fixtureTypes] as Payload
-}
-
-type Fixture = [Payload, Params, string, string]
+type Fixture = [string, string, string, string]

@@ -32,8 +32,8 @@ export default {
 
 			const from = params.from || env.DEFAULT_FROM
 			const to = params.to || env.DEFAULT_TO
-			const result = await sendEmail({ from, to, message, env })
-			return okResponse(result)
+			await sendEmail({ from, to, message, env })
+			return okResponse(message)
 		} catch (error) {
 			console.error(error)
 			if (error instanceof Error) {
