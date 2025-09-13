@@ -3,132 +3,162 @@ import { describe, expect, it } from 'vitest'
 import { invokeWorker } from '#/test'
 import type { Message } from '#/types'
 
-const normalFixtures = (): Fixture[] => [
-	// { name, body, path, env, expected }
-	{
-		name: 'type StackAutoUpdated',
-		body: createBody('StackAutoUpdated'),
-		expected: createExpected('[Komodo/Server1] Stack1 image upgraded'),
-	},
-	{
-		name: 'type StackStateChange',
-		body: createBody('StackStateChange'),
-		expected: createExpected('[Komodo/Server1] Stack1 unhealthy -> stopped'),
-	},
-
-	{
-		name: 'type ServerCpu',
-		body: createBody('ServerCpu'),
-		expected: createExpected('[Komodo/Server1] CPU at 50%'),
-	},
-	{
-		name: 'type ServerDisk',
-		body: createBody('ServerDisk'),
-		expected: createExpected('[Komodo/Server1] Disk used at 50%'),
-	},
-	{
-		name: 'type ServerUnreachable',
-		body: createBody('ServerUnreachable'),
-		expected: createExpected(
-			'[Komodo/Server1] Server unreachable for 401 Unauthorized',
-		),
-	},
-	{
-		name: 'type ServerVersionMismatch',
-		body: createBody('ServerVersionMismatch'),
-		expected: createExpected(
-			'[Komodo/Server1] Server version mismatch: 1.19.2 vs 1.19.3',
-		),
-	},
-	{
-		name: 'type ScheduleRun',
-		body: createBody('ScheduleRun'),
-		expected: createExpected(
-			'[Komodo/Server1] Run schedule Global Auto Update',
-		),
-	},
-]
-
-const skipFixtures = (): Fixture[] => [
-	{
-		name: 'skip via env: a in a,b',
-		body: createBody('StackStateChange'),
-		env: { KOMODO_SKIP: 'StackStateChange,ServerCpu' },
-		expected: {
-			skip: 'Skipped StackStateChange',
-		},
-	},
-	{
-		name: 'skip via env: b in a,b',
-		body: createBody('ServerCpu'),
-		env: { KOMODO_SKIP: 'StackStateChange,ServerCpu' },
-		expected: {
-			skip: 'Skipped ServerCpu',
-		},
-	},
-	{
-		name: 'skip via param',
-		body: createBody('StackStateChange'),
-		path: 'skip=StackAutoUpdated,StackStateChange',
-		expected: {
-			skip: 'Skipped StackStateChange',
-		},
-	},
-	{
-		name: 'skip not match',
-		body: createBody('StackAutoUpdated'),
-		env: { KOMODO_SKIP: 'StackStateChange,ServerCpu' },
-		expected: {
-			skip: undefined,
-			title: 'defined',
-		},
-	},
-	{
-		name: 'skip param overrides env: a in param',
-		body: createBody('StackAutoUpdated'),
-		path: 'skip=StackAutoUpdated,StackStateChange',
-		env: { KOMODO_SKIP: 'ServerCpu' },
-		expected: {
-			skip: 'defined',
-			title: 'undefined',
-		},
-	},
-	{
-		name: 'skip param overrides env: a in env',
-		body: createBody('ServerCpu'),
-		path: 'skip=StackAutoUpdated,StackStateChange',
-		env: { KOMODO_SKIP: 'ServerCpu' },
-		expected: createExpected('[Komodo/Server1] CPU at 50%'),
-	},
-	{
-		name: 'skip param overries env: param is empty',
-		body: createBody('ServerCpu'),
-		path: 'skip=',
-		env: { KOMODO_SKIP: 'StackAutoUpdated,ServerCpu' },
-		expected: createExpected('[Komodo/Server1] CPU at 50%'),
-	},
-]
-
-function main() {
-	// const fixtures = [...normalFixtures(), ...skipFixtures()]
-	const fixtures = []
-
-	fixtures.forEach(({ name, body, path = '', env = {}, expected }) => {
-		it(name, async () => {
-			const response = await invokeWorker(
-				`/testKey?template=Komodo&serverName=Server1&komodoHost=https://komodo.com&${path}`,
-				{
-					method: 'POST',
-					body: JSON.stringify(body),
-				},
-				env,
-			)
-			if (typeof expected.message === 'function') {
-				expected.message = expected.message({ body })
-			}
-			expect(await response.json()).toEqual(expected)
+describe('type', () => {
+	it('type StackAutoUpdated', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('StackAutoUpdated'),
+			expected: createExpected('[Komodo/Server1] Stack1 image upgraded'),
 		})
+		expect(result).toEqual(expected)
 	})
+
+	it('type StackStateChange', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('StackStateChange'),
+			expected: createExpected('[Komodo/Server1] Stack1 unhealthy -> stopped'),
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('type ServerCpu', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('ServerCpu'),
+			expected: createExpected('[Komodo/Server1] CPU at 50%'),
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('type ServerDisk', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('ServerDisk'),
+			expected: createExpected('[Komodo/Server1] Disk used at 50%'),
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('type ServerUnreachable', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('ServerUnreachable'),
+			expected: createExpected(
+				'[Komodo/Server1] Server unreachable for 401 Unauthorized',
+			),
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('type ServerVersionMismatch', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('ServerVersionMismatch'),
+			expected: createExpected(
+				'[Komodo/Server1] Server version mismatch: 1.19.2 vs 1.19.3',
+			),
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('type ScheduleRun', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('ScheduleRun'),
+			expected: createExpected(
+				'[Komodo/Server1] Run schedule Global Auto Update',
+			),
+		})
+		expect(result).toEqual(expected)
+	})
+})
+
+describe('skip', () => {
+	it('skip via env: a in a,b', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('StackStateChange'),
+			env: { KOMODO_SKIP: 'StackStateChange,ServerCpu' },
+			expected: {
+				skip: 'Skipped StackStateChange',
+			},
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('skip via env: b in a,b', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('ServerCpu'),
+			env: { KOMODO_SKIP: 'StackStateChange,ServerCpu' },
+			expected: {
+				skip: 'Skipped ServerCpu',
+			},
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('skip via param', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('StackStateChange'),
+			path: 'skip=StackAutoUpdated,StackStateChange',
+			expected: {
+				skip: 'Skipped StackStateChange',
+			},
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('skip not match', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('StackAutoUpdated'),
+			env: { KOMODO_SKIP: 'StackStateChange,ServerCpu' },
+			expected: createExpected('[Komodo/Server1] Stack1 image upgraded'),
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('skip param overrides env: a in param', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('StackAutoUpdated'),
+			path: 'skip=StackAutoUpdated,StackStateChange',
+			env: { KOMODO_SKIP: 'ServerCpu' },
+			expected: {
+				skip: 'Skipped StackAutoUpdated',
+			},
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('skip param overrides env: a in env', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('ServerCpu'),
+			path: 'skip=StackAutoUpdated,StackStateChange',
+			env: { KOMODO_SKIP: 'ServerCpu' },
+			expected: createExpected('[Komodo/Server1] CPU at 50%'),
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('skip param overries env: param is empty', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('ServerCpu'),
+			path: 'skip=',
+			env: { KOMODO_SKIP: 'StackAutoUpdated,ServerCpu' },
+			expected: createExpected('[Komodo/Server1] CPU at 50%'),
+		})
+		expect(result).toEqual(expected)
+	})
+})
+
+async function invoke({ body, path = '', env = {}, expected }: Fixture) {
+	const response = await invokeWorker(
+		`/testKey?template=Komodo&serverName=Server1&komodoHost=https://komodo.com&${path}`,
+		{
+			method: 'POST',
+			body: JSON.stringify(body),
+		},
+		env,
+	)
+	if (typeof expected === 'function') {
+		expected = expected({ body })
+	}
+	return {
+		result: await response.json(),
+		expected,
+	}
 }
 
 function createBody(name: string): any {
@@ -217,27 +247,20 @@ function create(type: string, data: any) {
 }
 
 interface Fixture {
-	name: string
 	body: string
 	path?: string
 	env?: Record<string, string>
-	expected: Message
+	expected: Message | CreateExpected
 }
 
-const createMessage: CreateMessage = ({ body }) => {
-	return `
+type CreateExpected = (options: { body: Record<string, any> }) => Message
+
+function createExpected(title: string): CreateExpected {
+	return ({ body }) => ({
+		title,
+		message: `
 https://komodo.com/stacks/targetId1
 ${JSON.stringify(body, null, 2)}
-	`.trim()
+		`.trim(),
+	})
 }
-
-type CreateMessage = (options: { body: Record<string, any> }) => string
-
-function createExpected(title: string): Message {
-	return {
-		title,
-		message: createMessage,
-	}
-}
-
-main()
