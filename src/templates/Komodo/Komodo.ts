@@ -87,6 +87,14 @@ const handlers = {
 			action: `${name} ${from} -> ${to}`,
 		}
 	},
+
+	ResourceSyncPendingUpdates({
+		name,
+	}: ResourceSyncPendingUpdates): HandlerReturn {
+		return {
+			action: `Resource sync '${name}' is pending for updates`,
+		}
+	},
 }
 
 export type Data =
@@ -144,6 +152,8 @@ export interface ServerVersionMismatch extends ServerBase {
 export interface ScheduleRun extends Base {
 	resource_type: string
 }
+
+export interface ResourceSyncPendingUpdates extends Base {}
 
 export type Payload = {
 	ts: number

@@ -69,6 +69,16 @@ describe('type', () => {
 		})
 		expect(result).toEqual(expected)
 	})
+
+	it('type ResourceSyncPendingUpdates', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('ResourceSyncPendingUpdates'),
+			expected: createExpected(
+				"[Komodo/Server1] Resource sync 'MySync' is pending for updates",
+			),
+		})
+		expect(result).toEqual(expected)
+	})
 })
 
 describe('skip', () => {
@@ -181,6 +191,9 @@ function createBody(name: string): any {
 		create('ScheduleRun', {
 			name: 'Global Auto Update',
 			resource_type: 'Procedure',
+		}),
+		create('ResourceSyncPendingUpdates', {
+			name: 'MySync',
 		}),
 	]
 	const dataMap = keyBy(data, 'type') as Record<string, any>
