@@ -1,8 +1,6 @@
 # 💌 Guten Email Notification 💌
 
-**Zero configuration, ntfy-like email notification service.** Supports popular apps out of the box, including: Jellyfin, Komodo, and more.
-
-**Perfect for:** Self-hosted apps, NAS systems, monitoring tools, CI/CD pipelines, and any service that needs reliable email notifications.
+**An elegant email notification service**: Zero configuration, ntfy-like, supports popular apps out of the box, including: Jellyfin, Komodo, and more.
 
 **Show your ❤️ and support by starring this project and following the author, [Guten Ye](https://github.com/gutenye)!**
 
@@ -14,11 +12,22 @@
 
 ## 🌠️ Screenshots
 
-**Email notifications in action:**
-
 ![Screenshot](./docs/screenshot.png)
 
-_Clean, readable email notifications that work with any app or service._
+## ✨ The Most Elegant Way to Send Email Notifications
+
+```sh
+curl NOTIFICATION_URL -d 'Title\nBody'
+```
+
+That’s your email — delivered.
+
+✅ Just a single HTTP request
+✅ First line → your title
+✅ Next line → your body
+✅ That’s it
+
+**Perfect for:** Deployment complete, Server alert, Backup finished, Github Actions, Shell script, Self-hosted apps, NAS systems, monitoring tools, CI/CD pipelines
 
 ## 🌟 Features
 
