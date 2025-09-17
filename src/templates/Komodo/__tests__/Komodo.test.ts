@@ -74,7 +74,7 @@ describe('type', () => {
 		const { result, expected } = await invoke({
 			body: createBody('ResourceSyncPendingUpdates'),
 			expected: createExpected(
-				"[Komodo/Server1] Resource sync 'MySync' is pending for updates",
+				"[Komodo/Server1] Sync 'MySync' is pending for updates",
 			),
 		})
 		expect(result).toEqual(expected)

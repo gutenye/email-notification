@@ -92,7 +92,7 @@ const handlers = {
 		name,
 	}: ResourceSyncPendingUpdates): HandlerReturn {
 		return {
-			action: `Resource sync '${name}' is pending for updates`,
+			action: `Sync '${name}' is pending for updates`,
 		}
 	},
 }
