@@ -22,10 +22,9 @@ curl NOTIFICATION_URL -d 'Title\nBody'
 
 That’s your email — delivered.
 
-✅ Just a single HTTP request
-
+✅ Just a single HTTP request <br/>
 ✅ First line → your title <br/>
-✅ Next line → your body
+✅ Next line → your body <br/>
 ✅ That’s it
 
 **Perfect for:** Deployment complete, Server alert, Backup finished, Github Actions, Shell script, Self-hosted apps, NAS systems, monitoring tools, CI/CD pipelines
