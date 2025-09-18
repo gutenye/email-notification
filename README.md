@@ -23,7 +23,8 @@ curl NOTIFICATION_URL -d 'Title\nBody'
 That’s your email — delivered.
 
 ✅ Just a single HTTP request
-✅ First line → your title
+
+✅ First line → your title <br/>
 ✅ Next line → your body
 ✅ That’s it
 
