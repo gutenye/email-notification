@@ -1,5 +1,6 @@
 import type { Message } from '../../types'
 import { formatPercentage } from '../../utils/format'
+import  pluralize  from 'pluralize'
 
 export function Komodo(payload: Payload, params: Params, env: Env): Message {
 	const { type } = payload.data
@@ -76,9 +77,10 @@ const handlers = {
 		}
 	},
 
-	StackAutoUpdated({ name }: StackAutoUpdated): HandlerReturn {
+	StackAutoUpdated({ name, images }: StackAutoUpdated): HandlerReturn {
+		const imagesName = images.map((image) => image.split(':')[0].split('/').pop()).join(', ')
 		return {
-			action: `${name} image upgraded`,
+			action: `${name} ${imagesName} ${pluralize('images', images.length)} upgraded`,
 		}
 	},
 

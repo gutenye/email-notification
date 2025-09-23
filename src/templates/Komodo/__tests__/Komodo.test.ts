@@ -1,4 +1,3 @@
-import { keyBy } from 'lodash-es'
 import { describe, expect, it } from 'vitest'
 import { createInvoke } from '#/test'
 import type { CreateExpected } from '#/test/types'
@@ -11,7 +10,17 @@ describe('type', () => {
 	it('type StackAutoUpdated', async () => {
 		const { result, expected } = await invoke({
 			body: createBody('StackAutoUpdated'),
-			expected: createExpected('[Komodo/Server1] Stack1 image upgraded'),
+			expected: createExpected('[Komodo/Server1] Stack1 image1 image upgraded'),
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('type StackAutoUpdated.MultipleImages', async () => {
+		const { result, expected } = await invoke({
+			body: createBody('StackAutoUpdated.MultipleImages'),
+			expected: createExpected(
+				'[Komodo/Server1] Stack1 image1, image2, image3, image4 images upgraded',
+			),
 		})
 		expect(result).toEqual(expected)
 	})
@@ -117,9 +126,9 @@ describe('skip', () => {
 
 	it('skip not match', async () => {
 		const { result, expected } = await invoke({
-			body: createBody('StackAutoUpdated'),
+			body: createBody('ServerDisk'),
 			env: { KOMODO_SKIP: 'StackStateChange,ServerCpu' },
-			expected: createExpected('[Komodo/Server1] Stack1 image upgraded'),
+			expected: createExpected('[Komodo/Server1] Disk used at 50%'),
 		})
 		expect(result).toEqual(expected)
 	})
@@ -158,9 +167,17 @@ describe('skip', () => {
 })
 
 function createBody(name: string): any {
-	const data = [
+	const data = Object.fromEntries([
 		createStack('StackAutoUpdated', {
-			images: ['gutenye/hello-node:latest'],
+			images: ['image1'],
+		}),
+		createStack('StackAutoUpdated.MultipleImages', {
+			images: [
+				'image1',
+				'image2:latest',
+				'user/image3:latest',
+				'ghcr.io/user/image4:latest',
+			],
 		}),
 		createStack('StackStateChange', {
 			from: 'unhealthy',
@@ -195,8 +212,7 @@ function createBody(name: string): any {
 		create('ResourceSyncPendingUpdates', {
 			name: 'MySync',
 		}),
-	]
-	const dataMap = keyBy(data, 'type') as Record<string, any>
+	])
 	return {
 		ts: 1756802981654,
 		resolved: true,
@@ -205,13 +221,13 @@ function createBody(name: string): any {
 			type: 'Stack',
 			id: 'targetId1',
 		},
-		data: dataMap[name],
+		data: data[name],
 		resolved_ts: 1756802981654,
 	}
 }
 
-function createStack(type: string, data: any) {
-	return {
+function createStack(name: string, data: any) {
+	return createItem(name, (type) => ({
 		type,
 		data: {
 			id: 'id1',
@@ -220,11 +236,11 @@ function createStack(type: string, data: any) {
 			server_name: 'Server1',
 			...data,
 		},
-	}
+	}))
 }
 
-function createServer(type: string, data: any) {
-	return {
+function createServer(name: string, data: any) {
+	return createItem(name, (type) => ({
 		type,
 		data: {
 			id: 'id1',
@@ -232,17 +248,17 @@ function createServer(type: string, data: any) {
 			region: null,
 			...data,
 		},
-	}
+	}))
 }
 
-function create(type: string, data: any) {
-	return {
+function create(name: string, data: any) {
+	return createItem(name, (type) => ({
 		type,
 		data: {
 			id: 'id1',
 			...data,
 		},
-	}
+	}))
 }
 
 function createExpected(title: string): CreateExpected {
@@ -253,4 +269,12 @@ https://komodo.com/stacks/targetId1
 ${JSON.stringify(body, null, 2)}
 		`.trim(),
 	})
+}
+
+function createItem(
+	name: string,
+	fn: (type: string) => any,
+): [string, Record<string, any>] {
+	const type = name.split('.')[0]
+	return [name, fn(type)]
 }
