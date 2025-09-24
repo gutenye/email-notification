@@ -1,6 +1,6 @@
+import pluralize from 'pluralize'
 import type { Message } from '../../types'
 import { formatPercentage } from '../../utils/format'
-import  pluralize  from 'pluralize'
 
 export function Komodo(payload: Payload, params: Params, env: Env): Message {
 	const { type } = payload.data
@@ -78,7 +78,7 @@ const handlers = {
 	},
 
 	StackAutoUpdated({ name, images }: StackAutoUpdated): HandlerReturn {
-		const imagesName = images.map((image) => image.split(':')[0].split('/').pop()).join(', ')
+		const imagesName = images.map(getImageName).join(', ')
 		return {
 			action: `${name} ${imagesName} ${pluralize('images', images.length)} upgraded`,
 		}
@@ -90,6 +90,16 @@ const handlers = {
 		}
 	},
 
+	StackImageUpdateAvailable({
+		name,
+		image,
+	}: StackImageUpdateAvailable): HandlerReturn {
+		const imageName = getImageName(image)
+		return {
+			action: `${name} ${imageName} update available`,
+		}
+	},
+
 	ResourceSyncPendingUpdates({
 		name,
 	}: ResourceSyncPendingUpdates): HandlerReturn {
@@ -97,6 +107,10 @@ const handlers = {
 			action: `Sync '${name}' is pending for updates`,
 		}
 	},
+}
+
+function getImageName(url: string): string {
+	return url.split(':')[0].split('/').pop() || 'UnknownImage'
 }
 
 export type Data =
@@ -123,6 +137,11 @@ export interface StackAutoUpdated extends StackBase {
 export interface StackStateChange extends StackBase {
 	from: string
 	to: string
+}
+
+export interface StackImageUpdateAvailable extends StackBase {
+	service: string
+	image: string
 }
 
 interface ServerBase extends Base {
