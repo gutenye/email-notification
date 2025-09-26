@@ -34,6 +34,14 @@ DEFAULT_FROM: notifications@yourdomain.com
 DEFAULT_TO: your-email@example.com
 ```
 
+## ✅ Test Your Deployment
+
+Send your first notification
+
+```bash
+curl https://your-worker.your-subdomain.workers.dev/YOUR_API_KEY -d 'Test Notification\nHello from Guten Email Notification!'
+```
+
 ## 📧 Gmail Setup (Optional)
 
 Prevent notifications from going to spam
@@ -42,13 +50,5 @@ Prevent notifications from going to spam
 2. Create a new filter:
    - **From:** `notifications@yourdomain.com`
    - **Action:** Never send it to Spam ✅
-
-## ✅ Test Your Deployment
-
-Send your first notification
-
-```bash
-curl https://your-worker.your-subdomain.workers.dev/YOUR_API_KEY -d $'Test Notification\nHello from Guten Email Notification!'
-```
 
 **🎉 Success!** You should receive an email notification within seconds.
