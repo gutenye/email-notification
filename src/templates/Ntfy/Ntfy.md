@@ -1,4 +1,8 @@
-# 🧩 Hello Email Notification 🧩
+## ntfy.sh Compatible
+
+# 🧩 ntfy.sh Compatible 🧩
+
+> Drop-in replacement, use Guten Email Notification as a direct replacement for ntfy.sh
 
 > Get instant email notifications for your [Hello](https://github.com/user/hello) deployments and server status updates
 
@@ -15,10 +19,8 @@
 
 1. Follow the [Quick Deploy](../../../docs/Deployment.md) guide, deploy Guten Email Notification service.
 
-2. Configure Hello Integration
-
-   Go to Hello Settings → Alerts and add your notification URL:
+2. Use it
 
    ```sh
-   https://YOUR_DOMAIN/YOUR_API_KEY?template=Hello
+   curl https://YOUR_DOMAIN/YOUR_API_KEY?template=Ntfy&title=Title -d 'Message'
    ```

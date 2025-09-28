@@ -21,6 +21,6 @@
        notifiers:
        webhook:
          type: webhook
-         url: https://HOST/API_KEY?template=Generic
+         url: https://YOUR_DOMAIN/YOUR_API_KEY?template=Generic
          method: POST
    ```

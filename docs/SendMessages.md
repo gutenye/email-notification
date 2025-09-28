@@ -8,10 +8,10 @@ Send a notification with title and body:
 
 ```bash
 # Just a title and a body
-curl https://your-domain.workers.dev/YOUR_API_KEY -d $'Title\nBody'
+curl https://YOUR_DOMAIN/YOUR_API_KEY -d $'Title\nBody'
 
 # Provide title in URL
-curl https://your-domain.workers.dev/YOUR_API_KEY?title=Title -d 'Body'
+curl https://YOUR_DOMAIN/YOUR_API_KEY?title=Title -d 'Body'
 ```
 
 ## 🎯 Advanced Features
@@ -21,7 +21,7 @@ curl https://your-domain.workers.dev/YOUR_API_KEY?title=Title -d 'Body'
 Send from/to specific email addresses:
 
 ```bash
-https://your-domain.workers.dev/YOUR_API_KEY?from=alerts@company.com&to=admin@company.com
+https://YOUR_DOMAIN/YOUR_API_KEY?from=alerts@company.com&to=admin@company.com
 ```
 
 ### 🔍 Debug Mode
@@ -29,7 +29,7 @@ https://your-domain.workers.dev/YOUR_API_KEY?from=alerts@company.com&to=admin@co
 See full request details for troubleshooting:
 
 ```bash
-https://your-domain.workers.dev/YOUR_API_KEY?debug=Title
+https://YOUR_DOMAIN/YOUR_API_KEY?debug=Title
 ```
 
 **Debug output includes:**
@@ -44,12 +44,12 @@ https://your-domain.workers.dev/YOUR_API_KEY?debug=Title
 Use pre-built templates for rich formatting:
 
 ```bash
-curl https://your-domain.workers.dev/YOUR_API_KEY?template=Jellyfin -d 'DATA'
+curl https://YOUR_DOMAIN/YOUR_API_KEY?template=Jellyfin -d 'DATA'
 ```
 
 Can use `_template` key if you can't use the `template` key
 
-**Available templates:** See our [Supported Apps](../src/templates/Templates.md) guide
+**Available templates:** See our [Supported Apps](../src/templates/Apps.md) guide
 
 ## 🔗 Integration Examples
 
@@ -65,5 +65,5 @@ Can use `_template` key if you can't use the `template` key
 ```bash
 #!/usr/bin/env bash
 
-curl https://your-domain.workers.dev/YOUR_API_KEY -d $'Daily Backup\n$(date): Backup completed successfully'
+curl https://YOUR_DOMAIN/YOUR_API_KEY -d $'Daily Backup\n$(date): Backup completed successfully'
 ```

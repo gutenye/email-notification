@@ -15,10 +15,10 @@
 
 2. **Configure BiliBiliToolPro Integration**
 
-	Add the following to your BiliBiliToolPro `.env` file:
+   Add the following to your BiliBiliToolPro `.env` file:
 
-	```bash
-	# .env file
-	Ray_Serilog__WriteTo__8__Args__api=https://HOST/API_KEY
-	Ray_Serilog__WriteTo__8__Args__bodyJsonTemplate=BiliBiliToolPro\n#msg#
-	```
+   ```bash
+   # .env file
+   Ray_Serilog__WriteTo__8__Args__api=https://YOUR_DOMAIN/YOUR_API_KEY
+   Ray_Serilog__WriteTo__8__Args__bodyJsonTemplate=BiliBiliToolPro\n#msg#
+   ```

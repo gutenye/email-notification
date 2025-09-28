@@ -13,6 +13,7 @@ const DEFAULT_ENV = {
 	DEFAULT_TO: 'to@test.com',
 }
 
+// invoke({ path: 'a=1&b=2', body: 'a' | {a: 1 }, env, expected: { title, message } })
 export function createInvoke(basePath: string) {
 	return async function invoke({
 		body,

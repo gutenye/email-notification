@@ -1,8 +1,8 @@
 import type { Message } from '#/types'
 
 export interface Fixture {
-	body: Record<string, any>
 	path?: string
+	body?: string | Record<string, any>
 	env?: Record<string, string>
 	expected: Message | CreateExpected
 }

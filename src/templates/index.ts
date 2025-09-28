@@ -3,6 +3,7 @@ import type { Message } from '../types'
 import { Generic } from './Generic/Generic'
 import { Jellyfin } from './Jellyfin/Jellyfin'
 import { Komodo } from './Komodo/Komodo'
+import { Ntfy } from './Ntfy/Ntfy'
 
 export function getTemplate(templateName: string): Template {
 	const template = templates[templateName]
@@ -14,6 +15,7 @@ const templates: Record<string, Template | undefined> = {
 	Komodo,
 	Jellyfin,
 	Generic,
+	Ntfy,
 }
 
 type Template = (payload: any, params: any) => Message

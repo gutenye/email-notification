@@ -43,7 +43,7 @@ That’s your email — delivered.
 
 - [Send Messages](./docs/SendMessages.md): API usage, examples, and advanced features
 - [Quick Deploy](./docs/Deployment.md): One-click deployment to Cloudflare Workers
-- [Supported Apps](./src/templates/Templates.md): Pre-built templates for popular apps
+- [Supported Apps](./src/templates/Apps.md): Pre-built templates for popular apps
 - [Development](./docs/Development.md): Local setup and development guide
 
 ## 🤝 Contributing
