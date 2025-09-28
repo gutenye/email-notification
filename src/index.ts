@@ -20,7 +20,7 @@ export default {
 			let message: Message
 			if ('debug' in params) {
 				message = await buildDebugMessage(request, params, env)
-			} else if (params.template) {
+			} else if (params.template || params._template) {
 				message = await buildJsonMessage(request, params, env)
 			} else {
 				message = await buildTextMessage(request, params, env)

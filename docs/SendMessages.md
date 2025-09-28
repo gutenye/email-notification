@@ -47,6 +47,8 @@ Use pre-built templates for rich formatting:
 curl https://your-domain.workers.dev/YOUR_API_KEY?template=Jellyfin -d 'DATA'
 ```
 
+Can use `_template` key if you can't use the `template` key
+
 **Available templates:** See our [Supported Apps](../src/templates/Templates.md) guide
 
 ## 🔗 Integration Examples
