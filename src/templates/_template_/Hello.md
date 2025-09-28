@@ -4,7 +4,7 @@
 
 ## 🌠️ Screenshots
 
-![Screenshot](./screenshot.png)
+![Screenshot](../screenshot.png)
 
 ## 🌟 Features
 
@@ -17,7 +17,7 @@
 
 2. Configure Hello Integration
 
-   Go to Hello Settings → Alerts and add your notification URL:
+   Go to Hello Settings -> Alerts and add your notification URL:
 
    ```sh
    https://YOUR_DOMAIN/YOUR_API_KEY?template=Hello

@@ -36,3 +36,11 @@ it('title, message in params', async () => {
 	})
 	expect(result).toEqual(expected)
 })
+
+it('title, message in params, metadata in params', async () => {
+	const { result, expected } = await invoke({
+		path: 'title=MyTitle&message=MyMessage&foo=bar&baz=qux',
+		expected: { title: 'MyTitle', message: 'MyMessage\nfoo: bar\nbaz: qux' },
+	})
+	expect(result).toEqual(expected)
+})

@@ -1,4 +1,4 @@
-import type { Message } from '../../types'
+import type { Message } from '#/types'
 
 // Payload: any json object
 export function Hello(payload: Payload, params: Params, env: Env): Message {

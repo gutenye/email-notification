@@ -18,12 +18,19 @@ export default {
 			}
 
 			let message: Message
-			if ('debug' in params) {
-				message = await buildDebugMessage(request, params, env)
-			} else if (params.template || params._template) {
-				message = await buildTemplateMessage(request, params, env)
+			const { debug, template, _template, ...restParams } = params
+			const templateName = template || _template
+			if (debug !== undefined) {
+				message = await buildDebugMessage(request, restParams, env)
+			} else if (templateName !== undefined) {
+				message = await buildTemplateMessage(
+					templateName,
+					request,
+					restParams,
+					env,
+				)
 			} else {
-				message = await buildTextMessage(request, params, env)
+				message = await buildTextMessage(request, restParams, env)
 			}
 
 			if (message.skip) {

@@ -8,7 +8,7 @@
 
 ## 🌠️ Screenshots
 
-![Screenshot](./screenshot.png)
+![Screenshot](../screenshot.png)
 
 ## 🌟 Features
 
