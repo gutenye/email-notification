@@ -3,7 +3,7 @@ import { createInvoke } from '#/test'
 import type { CreateExpected } from '#/test/types'
 import type { Payload } from '../Jellyfin'
 
-const invoke = createInvoke('template=Jellyfin')
+const invoke = createInvoke('_template=Jellyfin')
 
 describe('ItemAdded', () => {
 	it('Movie', async () => {

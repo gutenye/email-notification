@@ -15,10 +15,10 @@
 
 2. **Configure Jellyfin Integration**
 
-	Navigate to **Jellyfin Dashboard → My Plugins → Webhook** and Add Generic Destination
+   Navigate to **Jellyfin Dashboard → My Plugins → Webhook** and Add Generic Destination
 
-	```sh
-	Server Url: https://my-server.com
-	Webhook Url: https://YOUR_DOMAIN.workers.dev/YOUR_API_KEY?template=Jellyfin
-	Send All Properties: yes
-	```
+   ```sh
+   Server Url: https://my-server.com
+   Webhook Url: https://YOUR_DOMAIN.workers.dev/YOUR_API_KEY?_template=Jellyfin
+   Send All Properties: yes
+   ```

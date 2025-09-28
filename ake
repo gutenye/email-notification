@@ -30,13 +30,13 @@ localtest.command('error').action(async () => {
 localtest.command('komodo').action(async () => {
 	$`
 		echo '{ "ts": 1756926007932, "resolved": true, "level": "OK", "target": { "type": "Procedure", "id": "68b7b4ff743c4a609742e01b" }, "data": { "type": "ScheduleRun", "data": { "resource_type": "Procedure", "id": "68b7b4ff743c4a609742e01b", "name": "Global Auto Update" } }, "resolved_ts": 1756926007932 }' | \
-		http 'http://localhost:8787/a?template=Komodo&serverName=Server1&komodoHost=https://komodo.com'
+		http 'http://localhost:8787/a?_template=Komodo&_serverName=Server1&_komodoHost=https://komodo.com'
 	`
 })
 
 localtest.command('jellyfin').action(async () => {
 	$`
 		echo '{ "ServerName": "Server1", "NotificationType": "ItemAdded", "ItemType": "Movie", "SeriesName": "Series1", "Name": "Movie1", "ServerUrl": "https://jellyfin.com", "ServerId": "123", "ServerVersion": "1.0.0", "Timestamp": "2021-01-01T00:00:00Z", "UtcTimestamp": "2021-01-01T00:00:00Z", "Overview": "Overview1", "Tagline": "Tagline1", "ItemId": "123", "RunTimeTicks": 123, "RunTime": "123", "Year": 2021, "PremiereDate": "2021-01-01T00:00:00Z", "SeriesId": "123", "SeasonId": "123", "SeriesPremiereDate": "2021-01-01T00:00:00Z", "SeasonNumber": 1, "SeasonNumber00": "01", "SeasonNumber000": "001", "EpisodeNumber": 1, "EpisodeNumber00": "01", "EpisodeNumber000": "001", "Video_0_Title": "Video1", "Video_0_Type": "Video", "Video_0_Codec": "Codec1", "Video_0_Profile": "Profile1", "Video_0_Level": 1, "Video_0_Height": 123, "Video_0_Width": 123, "Video_0_AspectRatio": "1:1", "Video_0_Interlaced": true, "Video_0_FrameRate": 123, "Video_0_VideoRange": "VideoRange1", "Video_0_ColorSpace": "ColorSpace1", "Video_0_ColorTransfer": "ColorTransfer1", "Video_0_ColorPrimaries": "ColorPrimaries1", "Video_0_PixelFormat": "PixelFormat1", "Video_0_RefFrames": 123, "Audio_0_Title": "Audio1", "Audio_0_Type": "Audio", "Audio_0_Language": "Language1", "Audio_0_Codec": "Codec1", "Audio_0_Channels": 1, "Audio_0_Bitrate": 123, "Audio_0_SampleRate": 123, "Audio_0_Default": true, "PlaybackPositionTicks": 123, "PlaybackPosition": "123", "MediaSourceId": "123", "IsPaused": true, "IsAutomated": true, "DeviceId": "123", "DeviceName": "Device1", "ClientName": "Client1", "PlayMethod": "PlayMethod1", "Id": "123", "UserId": "123", "NotificationUsername": "NotificationUsername1", "Client": "Client1", "LastActivityDate": "2021-01-01T00:00:00Z", "LastPlaybackCheckIn": "2021-01-01T00:00:00Z", "RemoteEndPoint": "RemoteEndPoint1" }' | \
-		http 'http://localhost:8787/a?template=Jellyfin'
+		http 'http://localhost:8787/a?_template=Jellyfin'
 	`
 })

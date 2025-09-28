@@ -20,5 +20,5 @@
    ```bash
    # .env file
    Ray_Serilog__WriteTo__8__Args__api=https://YOUR_DOMAIN/YOUR_API_KEY
-   Ray_Serilog__WriteTo__8__Args__bodyJsonTemplate=BiliBiliToolPro\n#msg#
+   Ray_Serilog__WriteTo__8__Args__bodyJsont=BiliBiliToolPro\n#msg#
    ```

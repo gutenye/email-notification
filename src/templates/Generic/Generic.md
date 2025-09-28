@@ -10,11 +10,11 @@
 ## Getting Started
 
 ```sh
-curl 'https://YOUR_DOMAIN/YOUR_API_KEY?template=Generic' -d '{"title": "MyTitle", "message": "MyMessage"}'
+curl 'https://YOUR_DOMAIN/YOUR_API_KEY?_template=Generic' -d '{"title": "MyTitle", "message": "MyMessage"}'
 ```
 
 ### Custom keys
 
 ```sh
-curl 'https://YOUR_DOMAIN/YOUR_API_KEY?template=Generic&titleKey=a&messageKey=b' -d '{"a": "MyTitle", "b": "MyMessage"}'
+curl 'https://YOUR_DOMAIN/YOUR_API_KEY?_template=Generic&_titleKey=a&_messageKey=b' -d '{"a": "MyTitle", "b": "MyMessage"}'
 ```

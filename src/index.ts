@@ -18,13 +18,14 @@ export default {
 			}
 
 			let message: Message
-			const { debug, template, _template, ...restParams } = params
-			const templateName = template || _template
-			if (debug !== undefined) {
+			// Use the underscore-prefixed `_template` param for configuration to avoid conflicts with app-specific keys (e.g., Sonarr uses "template" as a key)
+			// Normal name `template` can be used to custom body value in the future
+			const { _debug, _template, ...restParams } = params
+			if (_debug !== undefined) {
 				message = await buildDebugMessage(request, restParams, env)
-			} else if (templateName !== undefined) {
+			} else if (_template !== undefined) {
 				message = await buildTemplateMessage(
-					templateName,
+					_template,
 					request,
 					restParams,
 					env,
@@ -37,8 +38,8 @@ export default {
 				return okResponse(message)
 			}
 
-			const from = params.from || env.DEFAULT_FROM
-			const to = params.to || env.DEFAULT_TO
+			const from = params._from || env.DEFAULT_FROM
+			const to = params._to || env.DEFAULT_TO
 			await sendEmail({ from, to, message, env })
 			return okResponse(message)
 		} catch (error) {
@@ -52,10 +53,9 @@ export default {
 } satisfies ExportedHandler<Env>
 
 type Params = {
-	from?: string
-	to?: string
-	template?: string
-	title?: string
-	debug?: string
+	_from?: string
+	_to?: string
+	_debug?: string
+	_template?: string
 	[key: string]: string | undefined
 }

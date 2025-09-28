@@ -20,5 +20,5 @@
    Go to Hello Settings -> Alerts and add your notification URL:
 
    ```sh
-   https://YOUR_DOMAIN/YOUR_API_KEY?template=Hello
+   https://YOUR_DOMAIN/YOUR_API_KEY?_template=Hello
    ```

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { createInvoke } from '#/test'
 import type { CreateExpected, Fixture } from '#/test/types'
 
-const invoke = createInvoke('template=Hello')
+const invoke = createInvoke('_template=Hello')
 
 describe.skip('group', () => {
 	it('group Hello', async () => {

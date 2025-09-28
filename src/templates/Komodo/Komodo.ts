@@ -4,7 +4,7 @@ import { formatPercentage } from '../../utils/format'
 
 export function Komodo(payload: Payload, params: Params, env: Env): Message {
 	const { type } = payload.data
-	const { serverName } = params
+	const { _serverName } = params
 
 	// skip
 	const skip = params.skip?.split(',') || env.KOMODO_SKIP?.split(',') || []
@@ -21,7 +21,7 @@ export function Komodo(payload: Payload, params: Params, env: Env): Message {
 		const result = handler(payload.data.data)
 		action = result.action || action
 	}
-	const title = `[Komodo/${serverName}] ${action}`
+	const title = `[Komodo/${_serverName}] ${action}`
 
 	// message
 	const komodoUrl = buildKomodoUrl(payload, params)
@@ -38,9 +38,9 @@ ${JSON.stringify(payload, null, 2)}
 
 function buildKomodoUrl(payload: Payload, params: Params): string {
 	const { type, id } = payload.target
-	const { komodoHost } = params
+	const { _komodoHost } = params
 	const typePath = `${type.toLowerCase()}s`
-	return `${komodoHost}/${typePath}/${id}`
+	return `${_komodoHost}/${typePath}/${id}`
 }
 
 const handlers = {
@@ -192,8 +192,8 @@ export type Payload = {
 }
 
 type Params = {
-	serverName: string
-	komodoHost: string
+	_serverName: string
+	_komodoHost: string
 	skip?: string[]
 }
 

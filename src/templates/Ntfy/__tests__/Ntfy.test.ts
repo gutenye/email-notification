@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { createInvoke } from '#/test'
 import type { CreateExpected, Fixture } from '#/test/types'
 
-const invoke = createInvoke('template=Ntfy')
+const invoke = createInvoke('_template=Ntfy')
 
 it('message in body', async () => {
 	const { result, expected } = await invoke({

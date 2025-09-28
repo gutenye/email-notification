@@ -3,7 +3,7 @@ import { createInvoke } from '#/test'
 import type { CreateExpected } from '#/test/types'
 
 const invoke = createInvoke(
-	'template=Komodo&serverName=Server1&komodoHost=https://komodo.com',
+	'_template=Komodo&_serverName=Server1&_komodoHost=https://komodo.com',
 )
 
 describe('type', () => {
@@ -36,11 +36,12 @@ describe('type', () => {
 	it('type StackImageUpdateAvailable', async () => {
 		const { result, expected } = await invoke({
 			body: createBody('StackImageUpdateAvailable'),
-			expected: createExpected('[Komodo/Server1] Stack1 image1 update available'),
+			expected: createExpected(
+				'[Komodo/Server1] Stack1 image1 update available',
+			),
 		})
 		expect(result).toEqual(expected)
 	})
-
 
 	it('type ServerCpu', async () => {
 		const { result, expected } = await invoke({
@@ -198,7 +199,7 @@ function createBody(name: string): any {
 		}),
 		createStack('StackImageUpdateAvailable', {
 			service: 'service1',
-			image: 'ghcr.io/user/image1:latest'
+			image: 'ghcr.io/user/image1:latest',
 		}),
 		createServer('ServerCpu', {
 			percentage: 50.12345,

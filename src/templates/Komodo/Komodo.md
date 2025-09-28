@@ -19,17 +19,17 @@
 
 2. **Configure Komodo Integration**
 
-	Go to **Komodo Settings → Alerts** and add your notification URL:
+   Go to **Komodo Settings → Alerts** and add your notification URL:
 
-	```sh
-	https://YOUR_DOMAIN.workers.dev/YOUR_API_KEY?template=Komodo&serverName=MyServer&komodoHost=https://my-server.com
-	```
+   ```sh
+   https://YOUR_DOMAIN.workers.dev/YOUR_API_KEY?_template=Komodo&_serverName=MyServer&_komodoHost=https://my-server.com
+   ```
 
-	**Configuration Parameters:**
+   **Configuration Parameters:**
 
-	- template: Uses the Komodo email template
-	- serverName: Your server name (appears in email subject)
-	- komodoHost: Your Komodo instance URL
+   - \_template: Uses the Komodo email template
+   - \_serverName: Your server name (appears in email subject)
+   - \_komodoHost: Your Komodo instance URL
 
 ## Advanced Configuration
 

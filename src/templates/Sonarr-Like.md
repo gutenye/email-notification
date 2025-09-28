@@ -23,5 +23,3 @@
     Server URL: https://YOUR_DOMAIN
     Topics: YOUR_API_KEY?_template=Ntfy
    ```
-
-   > Note: use `_template` key instead of `template` key, as it supports its own template

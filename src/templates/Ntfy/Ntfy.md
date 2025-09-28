@@ -22,5 +22,5 @@
 2. Use it
 
    ```sh
-   curl https://YOUR_DOMAIN/YOUR_API_KEY?template=Ntfy&title=Title -d 'Message'
+   curl https://YOUR_DOMAIN/YOUR_API_KEY?_template=Ntfy&title=Title -d 'Message'
    ```

@@ -21,7 +21,7 @@ curl https://YOUR_DOMAIN/YOUR_API_KEY?title=Title -d 'Body'
 Send from/to specific email addresses:
 
 ```bash
-https://YOUR_DOMAIN/YOUR_API_KEY?from=alerts@company.com&to=admin@company.com
+https://YOUR_DOMAIN/YOUR_API_KEY?_from=alerts@company.com&_to=admin@company.com
 ```
 
 ### 🔍 Debug Mode
@@ -29,7 +29,7 @@ https://YOUR_DOMAIN/YOUR_API_KEY?from=alerts@company.com&to=admin@company.com
 See full request details for troubleshooting:
 
 ```bash
-https://YOUR_DOMAIN/YOUR_API_KEY?debug=Title
+https://YOUR_DOMAIN/YOUR_API_KEY?_debug=Title
 ```
 
 **Debug output includes:**
@@ -44,7 +44,7 @@ https://YOUR_DOMAIN/YOUR_API_KEY?debug=Title
 Use pre-built templates for rich formatting:
 
 ```bash
-curl https://YOUR_DOMAIN/YOUR_API_KEY?template=Jellyfin -d 'DATA'
+curl https://YOUR_DOMAIN/YOUR_API_KEY?_template=Jellyfin -d 'DATA'
 ```
 
 Can use `_template` key if you can't use the `template` key

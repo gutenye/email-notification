@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { createInvoke } from '#/test'
 import type { CreateExpected, Fixture } from '#/test/types'
 
-const invoke = createInvoke('template=Generic')
+const invoke = createInvoke('_template=Generic')
 
 it('default', async () => {
 	const { result, expected } = await invoke({
@@ -18,9 +18,9 @@ it('default', async () => {
 	expect(result).toEqual(expected)
 })
 
-it('custom titleKey, messageKey', async () => {
+it('custom _titleKey, _messageKey', async () => {
 	const { result, expected } = await invoke({
-		path: 'titleKey=a&messageKey=b',
+		path: '_titleKey=a&_messageKey=b',
 		body: {
 			a: 'MyTitle',
 			b: 'MyMessage',
