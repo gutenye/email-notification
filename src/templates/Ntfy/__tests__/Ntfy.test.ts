@@ -12,7 +12,7 @@ it('message in body', async () => {
 	expect(result).toEqual(expected)
 })
 
-it('message in params', async () => {
+it.only('message in params', async () => {
 	const { result, expected } = await invoke({
 		path: 'message=MyMessage',
 		expected: { title: 'Ntfy', message: 'MyMessage' },

@@ -10,11 +10,10 @@ export async function buildTemplateMessage(
 	const template = getTemplate(templateName)
 	let payload: string | Record<string, any>
 	// type text: ntfy
+	payload = await request.text()
 	try {
-		payload = await request.json()
-	} catch {
-		payload = await request.text()
-	}
+		payload = JSON.parse(payload)
+	} catch {}
 	return template(payload, params, env)
 }
 

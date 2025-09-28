@@ -3,6 +3,7 @@ import {
 	createExecutionContext,
 	waitOnExecutionContext,
 } from 'cloudflare:test'
+import { isPlainObject } from 'lodash-es'
 import { vi } from 'vitest'
 import worker from '#/index'
 import type { Fixture } from './types'
@@ -21,11 +22,12 @@ export function createInvoke(basePath: string) {
 		env = {},
 		expected,
 	}: Fixture) {
+		const newBody = isPlainObject(body) ? JSON.stringify(body) : body
 		const response = await invokeWorker(
 			`/testKey?${basePath}&${path}`,
 			{
 				method: 'POST',
-				body: JSON.stringify(body),
+				body: newBody,
 			},
 			env,
 		)
