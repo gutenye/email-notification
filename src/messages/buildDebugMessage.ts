@@ -10,7 +10,7 @@ export async function buildDebugMessage(
 	const url = request.url
 	const urlText = buildUrlText(url)
 	const headersText = formatHeaders(request.headers)
-	const { debug: inpuTitle } = params
+	const { _debug: inpuTitle } = params
 
 	let messageText = await request.text()
 	try {
@@ -59,4 +59,4 @@ function buildUrlText(urlText: string) {
 	return `${url.protocol}//${url.host}${newPathname}${url.search}`
 }
 
-type Params = { debug?: string }
+type Params = { _debug?: string }

@@ -3,7 +3,7 @@ import { buildDebugMessage } from '../buildDebugMessage'
 
 describe('buildDebugMessage', () => {
 	it('should build debug message', async () => {
-		const request = new Request('https://example.com/MyApiKey?a=1', {
+		const request = new Request('https://example.com/MyApiKey?_debug=MyTitle', {
 			method: 'POST',
 			body: 'test',
 			headers: {
@@ -11,9 +11,9 @@ describe('buildDebugMessage', () => {
 				'content-type': 'text/plain',
 			},
 		})
-		const message = await buildDebugMessage(request, { debug: 'MyTitle' })
+		const message = await buildDebugMessage(request, { _debug: 'MyTitle' })
 		const expectedMessageText = `
-POST https://example.com/API_KEY?a=1
+POST https://example.com/API_KEY?_debug=MyTitle
 
 ## Headers
 
