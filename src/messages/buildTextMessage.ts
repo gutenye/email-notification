@@ -15,7 +15,7 @@ export async function buildTextMessage(
 			.split(/\n(.*)/s)
 			.map((v) => v.trim())
 		const title = parts[0]
-		const message = parts[1] || ''
+		const message = parts[1]
 		return { title, message }
 	}
 }

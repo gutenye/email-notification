@@ -6,7 +6,7 @@ describe('authentication', () => {
 		const invoke = createInvoke('/testKey')
 		const { result, expected } = await invoke({
 			body: 'MyTitle',
-			expected: { title: 'MyTitle', message: '' },
+			expected: { title: 'MyTitle' },
 		})
 		expect(result).toEqual(expected)
 	})

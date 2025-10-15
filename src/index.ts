@@ -1,7 +1,7 @@
-import { getTemplate } from '#/templates'
 import { buildDebugMessage } from './messages/buildDebugMessage'
 import { buildTemplateMessage } from './messages/buildTemplateMessage'
 import { buildTextMessage } from './messages/buildTextMessage'
+import { sanitizeMessage } from './messages/santizeMessage'
 import { sendEmail } from './sendEmail'
 import type { Message } from './types'
 import { errorResponse, okResponse } from './utils'
@@ -37,6 +37,8 @@ export default {
 					message = await buildTextMessage(request, restParams, env)
 				}
 			}
+
+			message = sanitizeMessage(message, keys)
 
 			if (message.skip) {
 				return okResponse(message)
