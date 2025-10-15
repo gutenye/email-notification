@@ -29,6 +29,19 @@ describe('topic in body', () => {
 	})
 })
 
+describe('json body', () => {
+	it('works', async () => {
+		const { result, expected } = await invoke({
+			body: {
+				title: 'MyTitle',
+				message: 'MyMessage',
+			},
+			expected: { title: 'MyTitle', message: 'MyMessage' },
+		})
+		expect(result).toEqual(expected)
+	})
+})
+
 it('message in body', async () => {
 	const { result, expected } = await invoke({
 		body: 'MyMessage',
