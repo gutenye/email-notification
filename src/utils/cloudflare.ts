@@ -27,7 +27,7 @@ export function errorResponse(
 		result = { error: inputError }
 	}
 	const options = {
-		status: 500,
+		status: inputError.httpStatus || 500,
 		...inputOptions,
 	}
 	return jsonResponse(result, options)

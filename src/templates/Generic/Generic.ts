@@ -1,10 +1,10 @@
 import { get } from 'lodash-es'
 import type { Message } from '../../types'
 
-export function Generic(payload: Payload, params: Params): Message {
+export function build(payload: Payload, params: Params): Message {
 	const { _titleKey, _messageKey } = params
 	return {
-		title: get(payload, _titleKey || 'title'),
+		title: get(payload, _titleKey || 'title') || 'Generic',
 		message: get(payload, _messageKey || 'message'),
 	}
 }

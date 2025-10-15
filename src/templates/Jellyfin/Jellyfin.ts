@@ -1,6 +1,6 @@
 import type { Message } from '../../types'
 
-export function Jellyfin(payload: Payload): Message {
+export function build(payload: Payload): Message {
 	const title = buildTitle(payload)
 	const message = buildMessage(payload)
 	return {

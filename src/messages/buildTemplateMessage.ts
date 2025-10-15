@@ -6,15 +6,27 @@ export async function buildTemplateMessage(
 	request: Request,
 	params: Params,
 	env: Env,
+	validateApiKey: (apiKey?: string) => void,
 ): Promise<Message> {
 	const template = getTemplate(templateName)
+
+	// get payload
 	let payload: string | Record<string, any>
 	// type text: ntfy
 	payload = await request.text()
 	try {
 		payload = JSON.parse(payload)
 	} catch {}
-	return template(payload, params, env)
+
+	// valiate api key
+	let apiKey: string | undefined
+	if (template.getApiKey) {
+		apiKey = template.getApiKey(payload, params, env)
+	}
+	validateApiKey(apiKey)
+
+	// run template
+	return template.build(payload, params, env)
 }
 
 type Params = {

@@ -16,15 +16,13 @@ const DEFAULT_ENV = {
 
 // invoke({ path: 'a=1&b=2', body: 'a' | {a: 1 }, env, expected: { title, message } })
 export function createInvoke(basePath: string) {
-	return async function invoke({
-		body,
-		path = '',
-		env = {},
-		expected,
-	}: Fixture) {
+	return async function invoke({ body, path, env = {}, expected }: Fixture) {
 		const newBody = isPlainObject(body) ? JSON.stringify(body) : body
+		const newBasePath = basePath.startsWith('/')
+			? basePath
+			: `/testKey?${basePath}`
 		const response = await invokeWorker(
-			`/testKey?${basePath}&${path}`,
+			`${newBasePath}${path ? `&${path}` : ''}`,
 			{
 				method: 'POST',
 				body: newBody,

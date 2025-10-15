@@ -2,7 +2,7 @@ import pluralize from 'pluralize'
 import type { Message } from '../../types'
 import { formatPercentage } from '../../utils/format'
 
-export function Komodo(payload: Payload, params: Params, env: Env): Message {
+export function build(payload: Payload, params: Params, env: Env): Message {
 	const { type } = payload.data
 	const { _serverName } = params
 

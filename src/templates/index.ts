@@ -1,9 +1,9 @@
 import invariant from 'tiny-invariant'
 import type { Message } from '../types'
-import { Generic } from './Generic/Generic'
-import { Jellyfin } from './Jellyfin/Jellyfin'
-import { Komodo } from './Komodo/Komodo'
-import { Ntfy } from './Ntfy/Ntfy'
+import * as Generic from './Generic/Generic'
+import * as Jellyfin from './Jellyfin/Jellyfin'
+import * as Komodo from './Komodo/Komodo'
+import * as Ntfy from './Ntfy/Ntfy'
 
 export function getTemplate(templateName: string): Template {
 	const template = templates[templateName.toLowerCase()]
@@ -18,4 +18,7 @@ const templates: Record<string, Template | undefined> = {
 	ntfy: Ntfy,
 }
 
-type Template = (payload: any, params: any) => Message
+type Template = {
+	build: (payload: any, params: any, env: Env) => Message
+	getApiKey?: (payload: any, params: any, env: Env) => string | undefined
+}

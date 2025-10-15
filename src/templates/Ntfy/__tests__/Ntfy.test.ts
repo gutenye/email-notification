@@ -1,8 +1,33 @@
 import { describe, expect, it } from 'vitest'
 import { createInvoke } from '#/test'
-import type { CreateExpected, Fixture } from '#/test/types'
 
 const invoke = createInvoke('_template=Ntfy')
+
+describe('topic in body', () => {
+	it('works', async () => {
+		const invoke = createInvoke('/?_template=Ntfy')
+		const { result, expected } = await invoke({
+			body: {
+				topic: 'testKey',
+			},
+			expected: { title: 'Ntfy', message: '' },
+		})
+		expect(result).toEqual(expected)
+	})
+
+	it('failed if _template is not ntfy', async () => {
+		const invoke = createInvoke('/')
+		const { result, expected } = await invoke({
+			body: {
+				topic: 'testKey',
+			},
+			expected: expect.objectContaining({
+				error: 'Invalid api key',
+			}),
+		})
+		expect(result).toEqual(expected)
+	})
+})
 
 it('message in body', async () => {
 	const { result, expected } = await invoke({
@@ -12,7 +37,7 @@ it('message in body', async () => {
 	expect(result).toEqual(expected)
 })
 
-it.only('message in params', async () => {
+it('message in params', async () => {
 	const { result, expected } = await invoke({
 		path: 'message=MyMessage',
 		expected: { title: 'Ntfy', message: 'MyMessage' },

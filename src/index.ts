@@ -1,3 +1,4 @@
+import { getTemplate } from '#/templates'
 import { buildDebugMessage } from './messages/buildDebugMessage'
 import { buildTemplateMessage } from './messages/buildTemplateMessage'
 import { buildTextMessage } from './messages/buildTextMessage'
@@ -12,26 +13,29 @@ export default {
 			const url = new URL(request.url)
 			const pathname = url.pathname.slice(1)
 			const params = Object.fromEntries(url.searchParams) as Params
-
-			if (!keys.includes(pathname)) {
-				return errorResponse('Invalid api key', { status: 404 })
-			}
-
-			let message: Message
 			// Use the underscore-prefixed `_template` param for configuration to avoid conflicts with app-specific keys (e.g., Sonarr uses "template" as a key)
 			// Normal name `template` can be used to custom body value in the future
 			const { _debug, _template, ...restParams } = params
-			if (_debug !== undefined) {
-				message = await buildDebugMessage(request, restParams, env)
-			} else if (_template !== undefined) {
+			const validateApiKey = createValidateApiKey(keys, pathname)
+
+			let message: Message
+			// handle api key in body case
+			if (_template !== undefined) {
 				message = await buildTemplateMessage(
 					_template,
 					request,
 					restParams,
 					env,
+					validateApiKey,
 				)
 			} else {
-				message = await buildTextMessage(request, restParams, env)
+				validateApiKey()
+
+				if (_debug !== undefined) {
+					message = await buildDebugMessage(request, restParams, env)
+				} else {
+					message = await buildTextMessage(request, restParams, env)
+				}
 			}
 
 			if (message.skip) {
@@ -58,4 +62,15 @@ type Params = {
 	_debug?: string
 	_template?: string
 	[key: string]: string | undefined
+}
+
+function createValidateApiKey(keys: string[], defaultApiKey: string) {
+	return function validateApiKey(apiKey?: string) {
+		const newApiKey = apiKey || defaultApiKey
+		if (!keys.includes(newApiKey)) {
+			const error = new Error('Invalid api key')
+			error.httpStatus = 404
+			throw error
+		}
+	}
 }

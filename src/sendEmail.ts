@@ -10,10 +10,10 @@ export async function sendEmail({ from, to, message, env }: Options) {
 	const msg = createMimeMessage()
 	msg.setSender({ name: senderName, addr: senderAddress })
 	msg.setRecipient(recipientAddress)
-	msg.setSubject(message.title)
+	msg.setSubject(message.title || 'Notification')
 	msg.addMessage({
 		contentType: 'text/plain',
-		data: message.message,
+		data: message.message || '',
 	})
 
 	const emailMessage = new EmailMessage(
