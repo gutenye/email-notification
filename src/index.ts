@@ -4,7 +4,7 @@ import { buildTextMessage } from './messages/buildTextMessage'
 import { sanitizeMessage } from './messages/santizeMessage'
 import { sendEmail } from './sendEmail'
 import type { Message } from './types'
-import { errorResponse, okResponse } from './utils'
+import { errorResponse, okResponse, timingSafeEqualSome } from './utils'
 
 export default {
 	async fetch(request, env): Promise<Response> {
@@ -69,7 +69,7 @@ type Params = {
 function createValidateApiKey(keys: string[], defaultApiKey: string) {
 	return function validateApiKey(apiKey?: string) {
 		const newApiKey = apiKey || defaultApiKey
-		if (!keys.includes(newApiKey)) {
+		if (!timingSafeEqualSome(keys, newApiKey)) {
 			const error = new Error('Invalid api key')
 			error.httpStatus = 404
 			throw error
