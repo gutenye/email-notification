@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createInvoke } from '#/test'
+import { createInvoke } from '~/test'
 
 const invoke = createInvoke('_template=Ntfy')
 

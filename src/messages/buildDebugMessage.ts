@@ -1,5 +1,5 @@
 import { startCase } from 'lodash-es'
-import type { Message } from '#/types'
+import type { Message } from '~/types'
 
 export async function buildDebugMessage(
 	request: Request,

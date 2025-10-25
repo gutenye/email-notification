@@ -1,5 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { createInvoke } from '#/test'
+import { createInvoke } from '~/test'
+
+describe('messageToSend', () => {
+	it('make sure message.message is not undefined', async () => {
+		const { sendEmail } = await import('~/sendEmail')
+		const invoke = createInvoke()
+		await invoke({ body: 'MyTitle' })
+		expect(sendEmail).toHaveBeenCalledWith(
+			expect.objectContaining({
+				message: { title: 'MyTitle', message: '' },
+			}),
+		)
+	})
+})
 
 describe('authentication', () => {
 	it('works with correct api key', async () => {

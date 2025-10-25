@@ -1,4 +1,4 @@
-import type { Message } from '#/types'
+import type { Message } from '~/types'
 import { getTemplate } from '../templates'
 
 export async function buildTemplateMessage(

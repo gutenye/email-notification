@@ -1,6 +1,6 @@
 import { EmailMessage } from 'cloudflare:email'
 import { createMimeMessage } from 'mimetext'
-import type { Message } from './types'
+import type { MessageToSend } from './messages/types'
 
 export async function sendEmail({ from, to, message, env }: Options) {
 	const senderName = 'Notification'
@@ -27,6 +27,6 @@ export async function sendEmail({ from, to, message, env }: Options) {
 type Options = {
 	from: string
 	to: string
-	message: Message
+	message: MessageToSend
 	env: Env
 }

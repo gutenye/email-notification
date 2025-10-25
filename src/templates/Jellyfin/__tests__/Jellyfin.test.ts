@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { createInvoke } from '#/test'
-import type { CreateExpected } from '#/test/types'
+import { createInvoke } from '~/test'
+import type { CreateExpected } from '~/test/types'
 import type { Payload } from '../Jellyfin'
 
 const invoke = createInvoke('_template=Jellyfin')

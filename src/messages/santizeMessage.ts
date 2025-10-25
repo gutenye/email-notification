@@ -1,5 +1,5 @@
 import { mapValues } from 'lodash-es'
-import type { Message } from '#/types'
+import type { Message } from '~/types'
 
 export function sanitizeMessage(inputMessage: Message, apiKeys: string[]) {
 	const message = mapValues(inputMessage, (value) => {

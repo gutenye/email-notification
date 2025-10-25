@@ -5,7 +5,7 @@ import {
 } from 'cloudflare:test'
 import { isPlainObject } from 'lodash-es'
 import { vi } from 'vitest'
-import worker from '#/index'
+import worker from '~/index'
 import type { Fixture } from './types'
 
 const DEFAULT_ENV = {
@@ -52,7 +52,7 @@ export async function invokeWorker(
 	return response
 }
 
-vi.mock('#/sendEmail', () => ({
+vi.mock('~/sendEmail', () => ({
 	sendEmail: vi.fn().mockResolvedValue({}),
 }))
 

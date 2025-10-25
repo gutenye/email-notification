@@ -1,4 +1,4 @@
-import type { Message } from '#/types'
+import type { Message } from '~/types'
 
 export async function buildTextMessage(
 	request: Request,

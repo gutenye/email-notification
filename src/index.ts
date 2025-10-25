@@ -1,9 +1,10 @@
+import invariant from 'tiny-invariant'
 import { buildDebugMessage } from './messages/buildDebugMessage'
 import { buildTemplateMessage } from './messages/buildTemplateMessage'
 import { buildTextMessage } from './messages/buildTextMessage'
 import { sanitizeMessage } from './messages/santizeMessage'
 import { sendEmail } from './sendEmail'
-import type { Message } from './types'
+import type { Message, MessageToSend } from './types'
 import { errorResponse, okResponse, timingSafeEqualSome } from './utils'
 
 export default {
@@ -46,7 +47,8 @@ export default {
 
 			const from = params._from || env.DEFAULT_FROM
 			const to = params._to || env.DEFAULT_TO
-			await sendEmail({ from, to, message, env })
+			const messageToSend = buildMessageToSend(message)
+			await sendEmail({ from, to, message: messageToSend, env })
 			return okResponse(message)
 		} catch (error) {
 			console.error(error)
@@ -74,5 +76,13 @@ function createValidateApiKey(keys: string[], defaultApiKey: string) {
 			error.httpStatus = 404
 			throw error
 		}
+	}
+}
+
+function buildMessageToSend(message: Message): MessageToSend {
+	invariant(message.title, 'Message is missing title')
+	return {
+		title: message.title,
+		message: message.message || '',
 	}
 }

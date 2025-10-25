@@ -1,5 +1,5 @@
-import type { Message } from '#/types'
-import { formatRecords } from '#/utils'
+import type { Message } from '~/types'
+import { formatRecords } from '~/utils'
 
 const DEFAULT_TITLE = 'Ntfy'
 const DEFAULT_MESSAGE = ''
