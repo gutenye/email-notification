@@ -5,10 +5,22 @@ import { buildTextMessage } from './messages/buildTextMessage'
 import { sanitizeMessage } from './messages/santizeMessage'
 import { sendEmail } from './sendEmail'
 import type { Message, MessageToSend } from './types'
-import { errorResponse, okResponse, timingSafeEqualSome } from './utils'
+import {
+	errorResponse,
+	getCorsHeaders,
+	okResponse,
+	timingSafeEqualSome,
+} from './utils'
 
 export default {
 	async fetch(request, env): Promise<Response> {
+		const corsHeaders = getCorsHeaders(env.CORS_ORIGIN)
+
+		// Handle CORS preflight
+		if (request.method === 'OPTIONS' && env.CORS_ORIGIN) {
+			return new Response(null, { headers: corsHeaders })
+		}
+
 		try {
 			const keys = env.API_KEYS.split('\n').map((v) => v.trim())
 			const url = new URL(request.url)
@@ -42,20 +54,20 @@ export default {
 			message = sanitizeMessage(message, keys)
 
 			if (message.skip) {
-				return okResponse(message)
+				return okResponse(message, { headers: corsHeaders })
 			}
 
 			const from = params._from || env.DEFAULT_FROM
 			const to = params._to || env.DEFAULT_TO
 			const messageToSend = buildMessageToSend(message)
 			await sendEmail({ from, to, message: messageToSend, env })
-			return okResponse(message)
+			return okResponse(message, { headers: corsHeaders })
 		} catch (error) {
 			console.error(error)
 			if (error instanceof Error) {
-				return errorResponse(error)
+				return errorResponse(error, { headers: corsHeaders })
 			}
-			return errorResponse('An unknown error occurred')
+			return errorResponse('An unknown error occurred', { headers: corsHeaders })
 		}
 	},
 } satisfies ExportedHandler<Env>

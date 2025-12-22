@@ -32,6 +32,9 @@ DEFAULT_FROM: notifications@yourdomain.com
 
 # Your email address (from Email Routing dashboard - Verified email addresses)
 DEFAULT_TO: your-email@example.com
+
+# CORS (optional)
+CORS_ORIGIN: https://your-website.com
 ```
 
 ## ✅ Test Your Deployment

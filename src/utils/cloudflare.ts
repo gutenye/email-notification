@@ -8,6 +8,15 @@ import { serializeError } from './error'
 // errorResponse(error | string)
 // okResponse(data | undefined)
 
+export function getCorsHeaders(origin: string | undefined) {
+	if (!origin) return {}
+	return {
+		'Access-Control-Allow-Origin': origin,
+		'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+		'Access-Control-Allow-Headers': 'Content-Type',
+	}
+}
+
 export function okResponse(
 	data: Record<string, unknown>,
 	options: Record<string, unknown> = {},

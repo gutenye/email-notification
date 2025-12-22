@@ -6,6 +6,7 @@ declare namespace Cloudflare {
 		API_KEYS: string;
 		FROM_FROM: string;
 		DEFAULT_TO: string;
+		CORS_ORIGIN?: string;
 		sendEmail: SendEmail;
 	}
 }
