@@ -22,7 +22,6 @@ export function getCorsHeaders({
 		.split('\n')
 		.map((o) => o.trim().replace(/\/$/, ''))
 		.filter(Boolean)
-	console.log(':: origins', JSON.stringify(allowedOrigins), origins.join(','))
 
 	const requestOrigin = request.headers.get('Origin')
 	if (requestOrigin && origins.includes(requestOrigin)) {
