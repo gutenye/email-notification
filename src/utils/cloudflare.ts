@@ -8,13 +8,33 @@ import { serializeError } from './error'
 // errorResponse(error | string)
 // okResponse(data | undefined)
 
-export function getCorsHeaders(origin: string | undefined) {
-	if (!origin) return {}
-	return {
-		'Access-Control-Allow-Origin': origin,
-		'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-		'Access-Control-Allow-Headers': 'Content-Type',
+export function getCorsHeaders({
+	request,
+	env,
+}: {
+	request: Request
+	env: Env
+}): Record<string, string> {
+	const allowedOrigins = env.CORS_ORIGIN
+	if (!allowedOrigins) return {}
+
+	const origins = allowedOrigins
+		.split('\n')
+		.map((o) => o.trim())
+		.filter(Boolean)
+	console.log(':: origins', JSON.stringify(allowedOrigins), origins.join(','))
+
+	const requestOrigin = request.headers.get('Origin')
+	if (requestOrigin && origins.includes(requestOrigin)) {
+		return {
+			'Access-Control-Allow-Origin': requestOrigin,
+			'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+			'Access-Control-Allow-Headers': 'Content-Type',
+			Vary: 'Origin',
+		}
 	}
+
+	return {}
 }
 
 export function okResponse(

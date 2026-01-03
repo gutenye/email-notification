@@ -14,12 +14,7 @@ import {
 
 export default {
 	async fetch(request, env): Promise<Response> {
-		const corsHeaders = getCorsHeaders(env.CORS_ORIGIN)
-
-		// Handle CORS preflight
-		if (request.method === 'OPTIONS' && env.CORS_ORIGIN) {
-			return new Response(null, { headers: corsHeaders })
-		}
+		const corsHeaders = getCorsHeaders({ request, env })
 
 		try {
 			const keys = env.API_KEYS.split('\n').map((v) => v.trim())
@@ -67,7 +62,9 @@ export default {
 			if (error instanceof Error) {
 				return errorResponse(error, { headers: corsHeaders })
 			}
-			return errorResponse('An unknown error occurred', { headers: corsHeaders })
+			return errorResponse('An unknown error occurred', {
+				headers: corsHeaders,
+			})
 		}
 	},
 } satisfies ExportedHandler<Env>
